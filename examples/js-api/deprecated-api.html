@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   <title>Deprecated API Example</title>
+   <script src="../../../../browser/deployr.min.js"></script>
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+   <h1>Deprecated API Example</h1>
+   <hr>
+   <ol>
+      <li>Populate <strong>/examples/config.json</strong> with the proper values before running.</li>
+      <li>Open the browser's debug window to view print logs for this example.</li>
+      <li>View <a href="http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/">documentation</a> for more information.</li>
+   </ol>
+
+   <script>
+      /*
+       * Copyright (C) 2010-2014 by Revolution Analytics Inc.
+       *
+       * This program is licensed to you under the terms of Version 2.0 of the
+       * Apache License. This program is distributed WITHOUT
+       * ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING THOSE OF NON-INFRINGEMENT,
+       * MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Please refer to the
+       * Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0) for more
+       * details.
+       */
+
+      /* -----------------------------------------------------------------------
+       * usage: http://localhost:8080/examples/js-api/deprecated-api.html
+       *
+       * Example using the deprecated `jsDeployr.js` interface     
+       * -----------------------------------------------------------------------
+       */
+
+      /*
+       * Run example.
+       */
+      function run(config) {
+
+         var R           = window.Revolution,
+             credentials = config.credentials;
+
+         // All possible RInputs
+         function createAllRInputs() {
+            var rinputs = [];
+            rinputs.push(R.RDataFactory.createNumeric('input_numeric', 5));
+            rinputs.push(R.RDataFactory.createInteger('input_integer', 10));
+            rinputs.push(R.RDataFactory.createBoolean('input_boolean', true));
+            rinputs.push(R.RDataFactory.createString('input_string', 'Hello'));
+            rinputs.push(R.RDataFactory.createDate('input_date', new Date()));
+            rinputs.push(R.RDataFactory.createPOSIXDate('input_posixct', new Date()));
+            rinputs.push(R.RDataFactory.createNumericVector('input_numericVector', [1.1, 2.1, 3.1, 4.1, 5.1]));
+            rinputs.push(R.RDataFactory.createIntegerVector('input_integerVector', [1, 2, 3, 4, 5]));
+            rinputs.push(R.RDataFactory.createBooleanVector('input_booleanVector', [true, false, true, true]));
+            rinputs.push(R.RDataFactory.createStringVector('input_StringVector', ['Hello', 'how', 'are', 'you?']));
+            rinputs.push(R.RDataFactory.createDateVector('input_dateVector', [new Date(), new Date(), new Date()]));
+            rinputs.push(R.RDataFactory.createPOSIXDateVector('input_posixctVector', [new Date(), new Date(), new Date()]));
+            rinputs.push(R.RDataFactory.createFactor('input_orderedfactor', [1, 2, 3], true, [4, 5, 6], ['a', 'b', 'c']));
+            rinputs.push(R.RDataFactory.createFactor('input_unorderedfactor', [1, 2, 3], false, [4, 5, 6], ['a', 'b', 'c']));
+            rinputs.push(R.RDataFactory.createNumericMatrix('input_numericMatrix', [
+               [1.1, 2.1, 3.1, 4.1, 5.1]
+            ]));
+            rinputs.push(R.RDataFactory.createIntegerMatrix('input_integerMatrix', [
+               [1, 2, 3, 4, 5]
+            ]));
+            rinputs.push(R.RDataFactory.createBooleanMatrix('input_logicalMatrix', [
+               [true, false, true, true]
+            ]));
+            rinputs.push(R.RDataFactory.createStringMatrix('input_characterMatrix', [
+               ['Hello', 'how', 'are', 'you?']
+            ]));
+            
+            return rinputs;
+         }
+
+         R.DeployR.init({
+            deployrURI: config.endpoint,
+            events: {
+
+               unload: {
+                  disableautosave: true,
+                  dropworkspace: true,
+                  dropdirectory: true,
+                  drophistory: true,
+                  flushhistory: true
+               },
+
+               globalIO: {
+                  scope: this,
+                  lifecycle: {
+
+                     start: function() {
+                        console.log('GLOBAL:START');
+                     },
+
+                     success: function(res, api) {
+                        console.log('GLOBAL:SUCCESS');
+                     },
+
+                     failure: function(code, res, api) {
+                        console.log('GLOBAL:FAILURE');
+                     },
+
+                     complete: function() {
+                        console.log('GLOBAL:COMPLETE');
+                     },
+
+                     end: function() {
+                        console.log('GLOBAL:END');
+                     }
+                  },
+
+                  statusCode: {
+                     500: function(api, res) {
+                        console.log('GLOBAL:500');
+                        console.log('API::: ' + api);
+                     },
+
+                     900: function(api, res) {
+                        console.log('GLOBAL:900');
+                        console.log('API::: ' + api);
+                     },
+
+                     940: function(api, res) {
+                        console.log('GLOBAL:940');
+                        console.log('API::: ' + api);
+                     }
+                  }
+               }
+            }
+         });
+
+         R.DeployR.userLogin({
+            username: credentials.username,
+            password: credentials.password,
+            transaction: {
+               scope: this,
+               'arguments': {
+                  foo: 'FOO',
+                  bar: 'BAR'
+               },
+               statusCode: {
+                  940: function() {
+                     console.log('TRANSACTION:940');
+                  }
+               }
+            }
+         }, {
+            scope: this,
+            success: function(res) {
+               console.log('end----/r/user/login------');
+               console.log(res);
+               console.log('--------------------------');
+
+               R.DeployR.repositoryScriptExecute({
+                  filename: 'DeployR - Hello World',
+                  author: 'testuser',
+                  inputs: createAllRInputs()
+               }, {
+                  scope: this,
+                  success: function(res) {
+                     console.log(res);
+                  }
+               });
+            },
+
+            failure: function(res) {
+               console.log('error----/r/user/login------');
+               console.log(res);
+               console.log('----------------------------');
+            }
+         });
+      }
+
+       // -- load configuration and run example --
+      $.getJSON('/examples/config.json').done(function(config) {
+         run(config);
+      });
+   </script>
+</body>
+
+</html>

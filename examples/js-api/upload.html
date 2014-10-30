@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   <META name="copyright" content="Copyright (C) 2010-2014 by Revolution Analytics Inc.">
+   <title>Example File Upload</title>
+   <script src="../../../../browser/deployr.min.js"></script>
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+   <h1>Example File Upload</h1>
+   <hr>
+   <ol>
+      <li>Populate <strong>/examples/config.json</strong> with the proper values before running.</li>
+      <li>Choose a file to upload.</li>
+      <li>Click the `upload` button.</li>
+      <li>Open the browser's debug window to view print logs for this example.</li>
+      <li>View <a href="http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/">documentation</a> for more information.</li>
+   </ol>
+
+   <form>
+      <input id="the-file" name="file" type="file">
+   </form>
+   <p>
+      <button onclick="upload()">Upload</button>
+   </p>
+
+   <script>
+      /*
+       * Copyright (C) 2010-2014 by Revolution Analytics Inc.
+       *
+       * This program is licensed to you under the terms of Version 2.0 of the
+       * Apache License. This program is distributed WITHOUT
+       * ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING THOSE OF NON-INFRINGEMENT,
+       * MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Please refer to the
+       * Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0) for more
+       * details.
+       */
+
+      /* ----------------------------------------------------------------------
+       * usage: http://localhost:8080/examples/js-api/response.html
+       *
+       * Example inspecting and printing a DeployR `/r/repository/script/execute`
+       * response using the `.get(key)` helper for easy response property
+       * lookup.
+       * ----------------------------------------------------------------------
+       */
+
+      /*
+       * Run example.
+       */
+      var config = {};
+
+      function upload() {
+         // HTML5 File Object
+         var file = document.getElementById('the-file').files[0];
+
+         // configure DeployR endpoint, login, attach, and upload a file
+         deployr.configure({
+               logging: true,
+               host: config.endpoint,
+               cors: config.cors
+            })
+            .io('/r/user/login')
+            .data(config.credentials)
+            .end(function(res) {
+               // do something with the response
+            })
+            .io('/r/repository/file/upload')
+            .data({ filename: 'SampleFileName', descr: 'Sample file upload.' })
+            .attach(file)
+            .error(function(err) {
+               // do something with the error
+            })
+            .end(function(res, chain) {
+               // do something with the response
+               console.log(res);
+            });
+      }
+
+       // -- load configuration and run example --
+      $.getJSON('/examples/config.json').done(function(c) {
+         config = c;
+      });
+   </script>
+</body>
+
+</html>

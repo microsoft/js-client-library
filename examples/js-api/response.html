@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   <title>Example inspecting response</title>
+   <script src="../../../../browser/deployr.min.js"></script>
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+   <h1>Example inspecting response</h1>
+   <hr>
+   <ol>
+      <li>Populate <strong>/examples/config.json</strong> with the proper values before running.</li>
+      <li>Open the browser's debug window to view print logs for this example.</li>
+      <li>View <a href="http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/">documentation</a> for more information.</li>
+   </ol>
+
+   <script>
+      /*
+       * Copyright (C) 2010-2014 by Revolution Analytics Inc.
+       *
+       * This program is licensed to you under the terms of Version 2.0 of the
+       * Apache License. This program is distributed WITHOUT
+       * ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING THOSE OF NON-INFRINGEMENT,
+       * MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Please refer to the
+       * Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0) for more
+       * details.
+       */
+
+      /* ----------------------------------------------------------------------
+       * usage: http://localhost:8080/examples/js-api/response.html
+       *
+       * Example inspecting and printing a DeployR `/r/repository/script/execute`
+       * response using the `.get(key)` helper for easy response property
+       * lookup.
+       * ----------------------------------------------------------------------
+       */
+
+      /*
+       * Run example.
+       */
+      function run(config) {
+         /*
+          * stdout print helper for the example.
+          */
+         var printf = function(key, obj) {
+            console.log('========================');
+            console.log(key);
+            console.log('========================');
+            console.log(obj);
+            console.log('\n\n');
+         };
+
+         deployr.configure({ host: config.endpoint, cors: config.cors })
+            .script('/testuser/root/DeployR - Hello World.R')
+            .numeric('input_randomNum', 10)
+            .end(function(res) {
+               printf('Response', res);
+               printf('call', res.get('call'));
+               printf('success', res.get('success'));
+               printf('console', res.get('console'));
+            });
+      }
+
+      // -- load configuration and run example --
+      $.getJSON('/examples/config.json').done(function(config) { run(config); });
+   </script>
+</body>
+
+</html>

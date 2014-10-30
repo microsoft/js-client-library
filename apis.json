@@ -1,0 +1,426 @@
+{
+	"/r/user/login" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/user/logout" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/user/about" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/user/autosave" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/user/release" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/project/create" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/pool" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/recycle" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/list" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/ping" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/about" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/about/update" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/save" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/saveas" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/close" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/grant" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/import" : {
+		"method": "POST",
+		"format": "json",
+		"upload": true
+	}, 
+
+	"/r/project/export" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/delete" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/execute/code" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/execute/script" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/execute/interrupt" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/execute/console" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/execute/history" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/execute/flush" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/execute/result/list" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/execute/result/download" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/execute/result/delete" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/workspace/list" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/workspace/get" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/workspace/upload" : {
+		"method": "POST",
+		"format": "json",
+		"upload": true
+	}, 
+
+	"/r/project/workspace/transfer" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/workspace/push" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/workspace/save" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/workspace/store" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/workspace/load" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/workspace/delete" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/directory/list" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/directory/upload" : {
+		"method": "POST",
+		"format": "json",
+		"upload": true		
+	}, 
+
+	"/r/project/directory/transfer" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/directory/write" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/directory/update" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/directory/store" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/directory/load" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/directory/download" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/directory/delete" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/package/list" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/package/attach" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/project/package/detach" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/job/list" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/job/submit" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/job/schedule" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/job/query" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/job/cancel" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/job/delete" : {
+		"method": "POST",
+		"format": "json"
+	}, 
+
+	"/r/repository/directory/list" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/directory/create" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/directory/rename" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/directory/copy" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/directory/move" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/directory/update" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/script/list" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/script/execute" : {
+		"method": "POST",
+		"format": "json"
+	},	
+
+	"/r/repository/script/render" : {
+		"method": "POST",
+		"format": "json"
+	},	
+
+	"/r/repository/script/interrupt" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/directory/archive" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/directory/upload" : {
+		"method": "POST",
+		"format": "json",
+		"upload": true		
+	},
+
+	"/r/repository/directory/download" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/directory/delete" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/file/list" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/file/fetch" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/file/fetch" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/file/upload" : {
+		"method": "POST",
+		"format": "json",
+		"upload": true
+	},
+
+	"/r/repository/file/transfer" : {
+		"method": "POST",
+		"format": "json"
+	},	
+
+	"/r/repository/file/write" : {
+		"method": "POST",
+		"format": "json"
+	},	
+
+	"/r/repository/file/update" : {
+		"method": "POST",
+		"format": "json"
+	},	
+
+	"/r/repository/file/diff" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/file/revert" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/file/grant" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/file/download" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/file/delete" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/file/copy" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/repository/file/move" : {
+		"method": "POST",
+		"format": "json"
+	},
+
+	"/r/server/info" : {
+		"method": "GET",
+		"format": "json"
+	}
+}

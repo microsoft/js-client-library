@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   <title>Example using no request chaining</title>
+   <script src="../../../../browser/deployr.min.js"></script>
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+   <h1>Example using no request chaining</h1>
+   <hr>
+   <ol>
+      <li>Populate <strong>/examples/config.json</strong> with the proper values before running.</li>
+      <li>Open the browser's debug window to view print logs for this example.</li>
+      <li>View <a href="http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/">documentation</a> for more information.</li>
+   </ol>
+
+   <script>
+      /*
+       * Copyright (C) 2010-2014 by Revolution Analytics Inc.
+       *
+       * This program is licensed to you under the terms of Version 2.0 of the
+       * Apache License. This program is distributed WITHOUT
+       * ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING THOSE OF NON-INFRINGEMENT,
+       * MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Please refer to the
+       * Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0) for more
+       * details.
+       */
+
+      /* ----------------------------------------------------------------------
+       * usage: http://localhost:8080/examples/js-api/no-chain.html
+       *
+       * Example using no request chaining. Runs a sequence of DeployR
+       * requests via callbacks:
+       * ----------------------------------------------------------------------
+       * 0. configure request to DeployR server `http://dhost:dport`
+       * 1. /r/user/login
+       * 2. /r/repository/script/execute
+       * 3. /r/project/create
+       * 4. /r/project/execute/script
+       * 5. /r/project/close
+       * 6. /r/user/logout
+       * ----------------------------------------------------------------------
+       */
+
+      var ruser = null;
+
+      /*
+       * Run example.
+       */
+      function run(config) {
+
+         deployr.configure({
+            logging: true,
+            cors: config.cors,
+            host: config.endpoint
+         });
+
+
+         // --- kick off sequence of callbacks ---
+         userLogin(config.credentials);
+      }
+
+      // ====================================================================
+
+      function userLogin(credentials) {
+
+         ruser = deployr.io('/r/user/login');
+
+         ruser.data(credentials);
+
+         ruser.error(function(err) {
+            // do something with the error
+         });
+
+         ruser.end(function(res) {
+            repositoryScriptExecute();
+         });
+      }
+
+      // ====================================================================
+
+      function repositoryScriptExecute() {
+         ruser = ruser.io('/r/repository/script/execute');
+
+         ruser.data({ filename: 'DeployR - Hello World', author: 'testuser' });
+
+         ruser.numeric('input_randomNum', 10);
+
+         ruser.error(function(err) {
+            // do something with the error
+         });
+
+         ruser.end(function(res) {
+            projectCreate();
+         });
+      }
+
+      // ====================================================================
+
+      function projectCreate() {
+         ruser = ruser.io('/r/project/create');
+
+         ruser.error(function(err) {
+            // do something with the error
+         });
+
+         ruser.end(function(res) {
+            projectExecuteScript(res.get('project').project);
+         });
+      }
+
+      // ====================================================================		
+
+      function projectExecuteScript(project) {
+         ruser = ruser.io('/r/project/execute/script');
+
+         ruser.data({
+            filename: 'DeployR - Hello World',
+            author: 'testuser',
+            project: project
+         });
+
+         ruser.numeric('input_randomNum', 10);
+
+         ruser.error(function(err) {
+            // do something with the error
+         });
+
+         ruser.end(function(res) {
+            projectClose(project);
+         });
+      }
+
+      // ====================================================================
+
+      function projectClose(project) {
+         ruser = ruser.io('/r/project/close');
+
+         ruser.data({ project: project });
+
+         ruser.end(function(res) {
+            userLogout();
+         });
+      }
+
+      // ====================================================================
+
+      function userLogout() {
+         ruser = ruser.io('/r/user/logout');
+
+         ruser.end(function(res) {
+            // do something with the success response
+         });
+      }
+
+      // ====================================================================
+
+
+      // -- load configuration and run example --
+      $.getJSON('/examples/config.json').done(function(config) {
+         run(config);
+      });
+   </script>
+</body>
+
+</html>
