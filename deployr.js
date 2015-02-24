@@ -123,7 +123,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
      this.rstream  = false;
      this.delayed  = false;
      this.file     = null; 
-     this.filter   = null;     
+     this.filter   = null; 
 
      // preset deployr's assigned response format for `this` api
      this.data({ format: this.api.format });
@@ -584,6 +584,53 @@ var DeployR = Base.extend(Emitter, RInputs, {
     } else {
       return DeployR.new(api, link).data(opts);
     }    
+  },
+
+  /** 
+   * Convenience function for adding an additional repository-managed shell 
+   * script execution to the exsisting sequential request chain.
+   *
+   * This call executes repository-managed shell scripts .sh, .csh, .bash, .bat 
+   * on the DeployR server. Due to the special security concerns associated with 
+   * excuting shell scripts on the DeployR server, only shell scripts owned by 
+   * _ADMINISTRATOR_ users can be executed on this API call. Any attempt to 
+   * execute a shell script stored in the repository that is not owned by an 
+   * _ADMINISTRATOR_ user will be rejected.
+   *
+   * To execute a repository-managed shell script the caller must provide 
+   * parameter values for _author_, _directory_, _filename_. This can be
+   * achieved by providing a fully qualified shell script 
+   * `/<author>/<directory>/<filename>`, for example:
+   *
+   *  ```
+   *  .shell('/admin/external:public:admin/echo.sh', 'echo.sh args to pass.')
+   *  ```
+   *
+   * @method shell
+   * @param {String} filepath to define the fully qualified shell script for
+   * execution. 
+   * @param {String} args (optional) arguments to be passed into the shell 
+   * script on execution.
+   * @return {DeployR} for chaining.   
+   * @api public
+   */
+  shell: function(path, args) {   
+    var link = { 
+          cookies: this.cookies, 
+          queue: this.q, 
+          deferred: this.deferred
+        },
+        tokens = Lang.isString(path) ? path.split('\/') : [];
+
+    // handle both: `/author/directory/filename` & `author/directory/filename`
+    if (tokens.length > 3) { tokens = tokens.slice(1); }
+
+    return DeployR.new('/r/repository/shell/execute', link).data({
+      author: tokens[0],
+      directory: tokens[1],
+      filename: tokens[2],
+      args: args
+    });
   },
 
   /** 
