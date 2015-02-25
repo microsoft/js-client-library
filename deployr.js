@@ -894,6 +894,34 @@ if (win) {
 module.exports = {
 
   /**
+   * Exposes the `DeployR` object for extending.
+   *
+   * ```var DeployR = require('deployr').DeployR;```
+   *
+   * @static
+   * @api public
+   * @return {DeployR} The `DeployR` object.
+   */   
+  DeployR: DeployR,
+
+  /**
+   * Exposes the supported DeployR APIs.
+   *
+   * @method apis
+   * @param {Boolean} flat (optional) if `true` will return an array of just the 
+   * API's endpoint properties, for example: 
+   * ```
+   * ['/r/user/login', '/r/user/logout', '/r/user/about', ...]
+   * ```
+   * @static
+   * @api public
+   * @return {Object|Array} The HTTP request to the DeployR server.      
+   */  
+  apis: function(flat) {
+    return flat ? Object.keys(apis) : apis;
+  },
+
+  /**
    * Represents a static method for configuring all DeployR requests. Settings 
    * made here are applied globally across every request.
    *
