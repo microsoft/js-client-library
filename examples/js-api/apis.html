@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Example supported DeployR APIs</title>
+    <script src="../../../../browser/deployr.min.js"></script>
+</head>
+
+<body>
+    <h1>Example demonstrates how to list all supported DeployR APIs</h1>
+    <hr>
+    <ol>
+        <li>Open the browser's debug window to view print logs for this example.</li>
+        <li>View <a href="http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/">documentation</a> for more information.</li>
+    </ol>
+
+    <script>
+    /*
+     * Copyright (C) 2010-2015 by Revolution Analytics Inc.
+     *
+     * This program is licensed to you under the terms of Version 2.0 of the
+     * Apache License. This program is distributed WITHOUT
+     * ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING THOSE OF NON-INFRINGEMENT,
+     * MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Please refer to the
+     * Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0) for more
+     * details.
+     */
+
+    /* 
+     * usage: http://localhost:8080/examples/js-api/apis.html
+     *
+     * This example demonstrates how to list all the supported DeployR APIs and
+     * printing to stdout.
+     */
+
+    var apis = deployr.apis();
+
+    console.log(apis);
+
+    console.log('\n============================================================\n');
+
+    var flaten = true;
+
+    apis = deployr.apis(flaten);
+    console.log(apis);
+    </script>
+</body>
+
+</html>
