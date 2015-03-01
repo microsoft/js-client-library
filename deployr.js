@@ -132,19 +132,9 @@ var DeployR = Base.extend(Emitter, RInputs, {
      this.req = 
         request[this.api.method.toLowerCase()](opts.host + '/deployr' + api);
      this.req.timeout(20 * 60 * 1000); // default timeout --> 20 minutes
-  
-     // All CORS deployr calls require sticky sessions
-     if (win && globalOptions.cors) { this.req.withCredentials(); }
 
-     if (this.api.upload) {
-       // If the env is the Browser there is no need to manually set the
-       // Content-Type. The browser will automatically set the 
-       // "multipart/form-data; boundary=..." value. If the env is Node we need
-       // to set it manually.
-       if (!win) { this.req.type('multipart/form-data'); }    
-     } else {
-      this.req.type('form');
-    } 
+     // All CORS deployr calls require sticky sessions
+     if (win && globalOptions.cors) { this.req.withCredentials(); }    
   },
 
   /**
@@ -400,10 +390,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
    * @api public
    */
   error: function (fn) {
-    var self = this;
-
     this.on('error', fn);
-    this.req.on('error', function(err) { self.emit('error', err); });
 
     return this;
   },
@@ -805,6 +792,25 @@ var DeployR = Base.extend(Emitter, RInputs, {
   _prepRequest: function (responseChain, args) {
     var req  = this.req,
         file = this.file;
+
+    // set the request type    
+    if (this.api.upload) {
+       // If the env is the Browser there is no need to manually set the
+       // Content-Type. The browser will automatically set the 
+       // "multipart/form-data; boundary=..." value. If the env is Node we need
+       // to set it manually.
+       if (!win) { this.req.type('multipart/form-data'); }    
+    } else {
+      req.type('form');
+    }    
+
+    req.on('error', function(err) { 
+      err = err || {};
+      this._handleError({ 
+        status: err.code || 'UNKNOWN CODE',
+        text: err || 'UNKNOWN ERROR'
+      });
+    }.bind(this));    
 
     this.share(args ? args.__cookies__ : null);
 
