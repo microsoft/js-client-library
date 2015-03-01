@@ -12,15 +12,15 @@
 var gulp    = require('gulp'),
     uglify  = require('gulp-uglifyjs'),
     plumber = require('gulp-plumber'),
-    onError = require('../util/handleErrors'),      
+    onError = require('../util/errors'),      
     config  = require('../config');
 
 /*
  * Task: uglifyjs
  */
 gulp.task('uglifyjs', ['browserify'], function() {
-	return gulp.src(['./browser/deployr.js'])
+	return gulp.src(['./browser/' + config.name + '.js'])
 	       .pipe(plumber({ errorHandler: onError }))
-	       .pipe(uglify('deployr.min.js', { compress: false }))
+	       .pipe(uglify(config.name + '.min.js', { compress: false }))
 	       .pipe(gulp.dest('./browser/'));	       
 });

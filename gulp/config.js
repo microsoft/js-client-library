@@ -13,7 +13,7 @@ var path = require('path'),
     pkg  = require('../package.json');
 
 module.exports = {
-	port: '3000',
+	port: '8080',
 	root: path.resolve('./'),
 	dist: './browser',
 	name: pkg.name,

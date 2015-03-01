@@ -1,48 +1,51 @@
 {
-   "name": "deployr",
-   "version": "7.3.0",
-   "description": "Simplified JavaScript client library for making requests to DeployR.",
-   "keywords": [
-      "deployr",
-      "deployr.io",
-      "ajax",
-      "R",
-      "api",
-      "simple"
-   ],
-   "author": "DeployR - Revolution Analytics Inc.",
-   "contributors": [{
+  "name": "deployr",
+  "version": "7.3.0",
+  "description": "Simplified JavaScript client library for making requests to DeployR.",
+  "keywords": [
+    "deployr",
+    "deployr.io",
+    "ajax",
+    "R",
+    "api",
+    "simple"
+  ],
+  "author": "DeployR - Revolution Analytics Inc.",
+  "contributors": [
+    {
       "name": "Sean Wells"
-   }],
-   "repository": {
+    }
+  ],
+  "repository": {
     "type": "git",
     "url": "git://github.com/deployr/js-client-library.git"
   },
-   "homepage": "http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc",
-   "scripts": {
-      "start": "gulp start"
-   },
-   "devDependencies": {
-      "browserify-shim": "~3.4.1",
-      "browserify": "~3.36.0",
-      "vinyl-source-stream": "~0.1.1",
-      "connect": "~2.14.3",
-      "gulp": "^3.8.8",
-      "gulp-uglifyjs": "~0.4.2",
-      "gulp-plumber": "~0.6.4",
-      "gulp-util": "~2.2.20",
-      "gulp-livereload": "~2.1.0",
-      "gulp-jshint": "^1.7.1",
-      "gulp-header": "^1.1.1"
-   },
-   "dependencies": {
-      "superagent": "^0.18.0",
-      "d.js": "^0.6.0",
-      "ws": "^0.4.32"
-   },
-   "main": "deployr.js",
-   "engines": {
-      "node": ">= 0.10.0"
-   },
-   "license": "Apache 2.0 License"
+  "homepage": "http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc",
+  "scripts": {
+    "start": "gulp start",
+    "build": "gulp"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "gulp": "^3.8.11",
+    "gulp-connect": "^2.2.0",
+    "gulp-header": "^1.2.2",
+    "gulp-jshint": "^1.9.2",
+    "gulp-livereload": "^3.8.0",
+    "gulp-plumber": "^0.6.6",
+    "gulp-uglifyjs": "^0.6.0",
+    "gulp-util": "^3.0.4",
+    "tape": "^3.5.0",
+    "vinyl-source-stream": "^1.0.0"
+  },
+  "dependencies": {
+    "d.js": "^0.6.0",
+    "superagent": "^0.21.0",
+    "ws": "^0.4.32"
+  },
+  "main": "deployr.js",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "license": "Apache 2.0 License"
 }
