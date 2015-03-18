@@ -1,6 +1,6 @@
 {
   "name": "deployr",
-  "version": "7.3.0",
+  "version": "7.4.0",
   "description": "Simplified JavaScript client library for making requests to DeployR.",
   "keywords": [
     "deployr",
