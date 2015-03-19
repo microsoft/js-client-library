@@ -177,7 +177,7 @@ Shortcuts
 
  * `gulp` Runs a build.
  * `gulp start` Runs a build and starts a local webserver with LiveReload 
- (port __3000__) rebuilding on file changes.
+ (port __8080__) rebuilding on file changes.
 
 Destination
 -----------
