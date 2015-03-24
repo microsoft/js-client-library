@@ -1,5 +1,5 @@
 /*!
- * Copyright (C) 2010-2014 by Revolution Analytics Inc.
+ * Copyright (C) 2010-2015 by Revolution Analytics Inc.
  *
  * This program is licensed to you under the terms of Version 2.0 of the
  * Apache License. This program is distributed WITHOUT
@@ -111,19 +111,20 @@ var DeployR = Base.extend(Emitter, RInputs, {
 
      if (!apis[api]) { throw new Error('Invalid API "' + api + '"'); }
     
-     this.api      = merge({ 'call': api }, apis[api]);    
-     this.link     = link || {};
-     this.q        = this.link.queue || new Queue();
-     this.deferred = this.link.deferred || D();
-     this.cookies  = this.link.cookies;
-     this.logger   = Logger.get(api, Logger.OFF); // transaction-level logging
-     this.params   = {};
-     this.inputs   = []; // rinputs list 
-     this.outputs  = []; // routput object list
-     this.rstream  = false;
-     this.delayed  = false;
-     this.file     = null; 
-     this.filter   = null; 
+     this.api        = merge({ 'call': api }, apis[api]);    
+     this.link       = link || {};
+     this.q          = this.link.queue || new Queue();
+     this.deferred   = this.link.deferred || D();
+     this.cookies    = this.link.cookies;
+     this.logger     = Logger.get(api, Logger.OFF); // transaction-level logging
+     this.params     = {};
+     this.inputs     = []; // rinputs list 
+     this.outputs    = []; // routput object list
+     this.rstream    = false;
+     this.delayed    = false;
+     this.globalEvts = true; // suppress|raise global events fot this `io`     
+     this.file       = null; 
+     this.filter     = null; 
 
      // preset deployr's assigned response format for `this` api
      this.data({ format: this.api.format });
@@ -151,6 +152,35 @@ var DeployR = Base.extend(Emitter, RInputs, {
 
     return this;
   },
+
+  /**
+   * Suppress or raise global events for this `io` request.
+   *
+   * @method global
+   * @param {Boolean} raise `true` to raise global events, `false` to supress 
+   * event firing globally.
+   * @return {DeployR} for chaining.
+   * @api public
+   */  
+  global: function(raise) {
+    this.globalEvts = Lang.isBoolean(raise) ? raise : this.globalEvts;
+
+    return this;
+  },  
+
+  /**
+   * Retrieve details about user.
+   *   
+   * @method about
+   * @return {Object} details about user otherwies `null`.
+   * @api public   
+   */
+  about: function() {
+    var response = this.req.res;
+
+    return this.api['call'] === '/r/user/login' && response ? 
+           response.body.get('user') : null;
+  },  
 
   /**
    * Shares the cookies from a diffrent `.io()` agent to preserve session state
@@ -537,7 +567,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
     return DeployR.new(api, { 
       cookies: this.cookies, 
       queue: this.q, 
-      deferred: this.deferred 
+      deferred: this.deferred
     });
   },
 
@@ -555,13 +585,15 @@ var DeployR = Base.extend(Emitter, RInputs, {
      var args = utils.signature(arguments),
          opts = args.opts,
          api  = args.api,
-         link = { cookies: this.cookies, queue: this.q, deferred: this.deferred };  
+         link = { 
+          cookies: this.cookies, 
+          queue: this.q, 
+          deferred: this.deferred
+        };  
 
     // convenience - if the project is a boolen `true` rather than a pid, first
     // create a new project and then prepare the project api call to execute
-    if (opts.project && Lang.isBoolean(opts.project)) {
-      delete opts['project'];
-
+    if (args.create) {
       return DeployR.new('/r/project/create', link)
                .end(function(res) {
                   return { project: res.get('project').project };
@@ -620,6 +652,44 @@ var DeployR = Base.extend(Emitter, RInputs, {
     });
   },
 
+  /** 
+   * Convenience function for executing a block of R code on the R session.
+
+   * Example:
+   *  ```
+   *  .code('x<-5')
+   *  // -- or --
+   *  .code('x<-5', projectId)
+   *  ```
+   *   
+   * @method code
+   * @param {String} r - The block of R code to execute.
+   * @param {String} project - (optional) if omitted a new project will first be 
+   * created and used, otherwise it will execute on the R session identified by 
+   * this `project`.
+   * @return {DeployR} for chaining.   
+   * @api public
+   */
+  code: function(r, project) {
+     var link = {
+             cookies: this.cookies,
+             queue: this.q,
+             deferred: this.deferred
+         },
+         api = '/r/project/execute/code';
+
+     if (!project) {
+         return DeployR.new('/r/project/create', link)
+             .end(function(res) {
+                 return { project: res.get('project').project };
+             })
+             .io(api)
+             .data({ code: r });
+     } else {
+         return DeployR.new(api, link).data({ code: r, project: project });
+     }
+  },
+  
   /** 
    * Release any residual project resources associated with the application 
    * instance whenever a client application terminates. This includes closing 
@@ -776,15 +846,15 @@ var DeployR = Base.extend(Emitter, RInputs, {
    * @api private
    */
   _clear: function() {    
-    this.api     = null;
     this.params  = {};
     this.inputs  = [];
     this.outputs = [];
     this.rstream = false;
     this.delayed = false;
+    this.api     = null;    
     this.file    = null;  
     this.filter  = null;
-  },  
+  }, 
 
   /**
    * @api private
@@ -805,10 +875,11 @@ var DeployR = Base.extend(Emitter, RInputs, {
     }    
 
     req.on('error', function(err) { 
-      err = err || {};
+      err = err || {  code: 'UNKNOWN CODE', text: 'UNKNOWN ERROR' };
+
       this._handleError({ 
         status: err.code || 'UNKNOWN CODE',
-        text: err || 'UNKNOWN ERROR'
+        text: err
       });
     }.bind(this));    
 
@@ -868,8 +939,10 @@ var DeployR = Base.extend(Emitter, RInputs, {
       Logger.error('error()', this.api, res, raw);
       this.logger.error('error()', this.api, res, raw);
 
-      // -- notify global errors first (if any) for this call --
-      raiseGlobalErrors(this.api['call'], res);        
+      // -- notify global errors first (if any) for this call --      
+      if (this.globalEvts) {
+        raiseGlobalErrors(this.api['call'], res);        
+      }
 
       // -- tranaction level HTTP or DeployR errors come next --    
       this.emit('error', res);
@@ -1012,9 +1085,7 @@ module.exports = {
 
     // convenience - if the project is a boolen `true` rather than a pid, first
     // create a new project and then prepare the project api call to execute
-    if (opts.project && Lang.isBoolean(opts.project)) {
-      delete opts['project'];
-
+    if (args.create) {
       return DeployR.new('/r/project/create')
                .end(function(res) {
                   return { project: res.get('project').project };
