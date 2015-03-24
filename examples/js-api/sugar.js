@@ -62,13 +62,13 @@ var project   = null; // project-id used to close project at the end
 
 // If you had a valid ProjectID here you could use it. Since we do not we can
 // pass in `true` and a temp project will be created as a convenience.
-var isProject = true;
+var createProject = true;
 
 // login
 var ruser = deployr.auth(credentials.username, credentials.password);
 
 // Executes repository-managed scripts on the R session.
-ruser.script('/testuser/root/DeployR - Hello World.R', isProject)
+ruser.script('/testuser/root/DeployR - Hello World.R', createProject)
    .numeric('input_randomNum', 10)   
    .end(function(res) { 
    	 project = res.get('project').project; // save project so we can close later

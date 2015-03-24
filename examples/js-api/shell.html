@@ -53,7 +53,7 @@
         // Set the DeployR server endpoint URL
         // =====================================================================
 
-        deployr.configure({ host: config.endpoint, logging: false });
+        deployr.configure({ host: config.endpoint, logging: false, cors: true });
 
         // =====================================================================
         // Authenticate as a `ADMINISTRATOR` and execute pre-supplied 

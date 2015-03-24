@@ -8,17 +8,30 @@ flexibility, readability, and a low learning curve.
 Links
 -----
 
-  * [Download](http://deployr.revolutionanalytics.com/docanddown/#clientlib)
+  * [Download](#downloading)
   * [User Guide Documentation](http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc)
   * [API Documentation](http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/api/)
-  * [Installation](http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/#install)  
+  * [Using](http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/#install)  
   * [Simple examples](#examples)
   * [Gulp, for building](#building)
   * [Tests](#tests)
   * [License](#license)
 
+Downloading
+============
+
+There are a few diffrent was to obtaining the library depending on your 
+environment and intended usage:
+
+- `$ npm install deployr` dependent on [Node.js](http://nodejs.org/download/)
+- `$ git clone https://github.com/deployr/js-client-library.git`
+- [Download Zip](https://github.com/deployr/js-client-library/archive/master.zip)
+- Download specific [release](https://github.com/deployr/js-client-library/releases)
+
 Environments
 ============
+
+- Browser and Node.js
 
 We recommend you [download and install](http://nodejs.org/download/) Node.js.
 It is __not__ a requirement for the browser however using the JavaScript client 
@@ -43,8 +56,8 @@ If your environment is Node then the entire root ```./deployr/``` directory
 represents the JavaScript client library as it uses the same source for both 
 environments.
 
-Installation
-============
+Installing
+==========
 
 Browser
 -------
@@ -120,19 +133,23 @@ __Browser:__
 }	
 ```
 
-Alternatively, you can run the examples as is without moving them via the 
-embedded web server if you have Node.js installed:
+- Open your browser and select an example `.html` file to run. All examples 
+simply print to stdout viewable from your browser debug console.
 
-`$ npm install --global gulp`
+Alternatively, you can run the examples as is without moving them via the 
+embedded web server if you have [Node.js](http://nodejs.org/download/) installed:
+
+`$ npm install deployr`
 
 `$ cd ./deployr`
 
 `$ npm install`
 
-`$gulp start`
+`$ npm start`
 
-Open your browser to _http://localhost:3000/examples/_ and select an example 
-.html file to run.
+Open your browser to _http://localhost:8080_ and select a example 
+`.html` file to run. All examples simply print to stdout viewable from your 
+browser debug console.
 
 __Node.js:__
 
@@ -164,20 +181,17 @@ Our dev and release builds are handled by [gulp.js](http://gulpjs.com/).
 Installation
 ------------
 
-First you need to install `gulp` (`$ sudo npm install --global gulp`)
+1. [Download and install](http://nodejs.org/download/) Node.js
+2. `$ npm install deployr`
+3. `$ cd ./deployr`
+4. `$ npm install` This will install the development tools needed to build locally.
 
-After cloning you can simply do an NPM install.
+Targets
+-------
 
-`$ npm install`
-
-This will install the development tools needed to build locally.
-
-Shortcuts
----------
-
- * `gulp` Runs a build.
- * `gulp start` Runs a build and starts a local webserver with LiveReload 
- (port __8080__) rebuilding on file changes.
+ * `$ npm run build` - Runs a build.
+ * `$ npm start` - Runs a build and starts a local webserver with LiveReload 
+   on `http://localhost:8080` rebuilding on file changes.
 
 Destination
 -----------
@@ -191,7 +205,7 @@ Coming soon...
 License
 =======
 
-Copyright (C) 2010-2014 by Revolution Analytics Inc.
+Copyright (C) 2010-2015 by Revolution Analytics Inc.
 
 This program is licensed to you under the terms of Version 2.0 of the
 Apache License. This program is distributed WITHOUT
