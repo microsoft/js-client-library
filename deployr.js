@@ -32,7 +32,7 @@ var win         = (typeof window !== 'undefined'),
 Logger.setLevel(Logger.OFF);
 
 /*
- * Global options the persist through all DeployR requests.
+ * Global options that persist through all DeployR requests.
  */
 var globalOptions = { 
   cors: false,
@@ -40,9 +40,25 @@ var globalOptions = {
   sticky: false,
   cookies: null,
   host: '',
+  allowSelfSignedSSLCert: false,
   maxRequests: null, // no socket pooling in http.Agent
   events:{},
-  set: function(prop, value) { if (prop !== 'set') { this[prop] = value; } }
+  set: function(prop, value) { 
+    if (prop !== 'set') { 
+      if (prop === 'host') {         
+         // Be more forgiving on the entered DeployR 'endpoint':
+         //   - http(s)://dhost:port
+         //   - http(s)://dhost:port/deployr
+         //   - dhost:port
+         //   - dhost:port/deployr         
+         value = value.replace(/\/*$|\/*deployr\/*$/, '');
+         value = (new RegExp('^(http|https)://', 'i')).test(value) ? value : 
+            'http://' + value;
+      }
+
+      this[prop] = value; 
+    } 
+  }
 };
 
 /*
@@ -129,13 +145,18 @@ var DeployR = Base.extend(Emitter, RInputs, {
      // preset deployr's assigned response format for `this` api
      this.data({ format: this.api.format });
 
-     // wrap superagent for the heavly lifting      
+     // wrap superagent for the heavy lifting     
      this.req = 
         request[this.api.method.toLowerCase()](opts.host + '/deployr' + api);
      this.req.timeout(20 * 60 * 1000); // default timeout --> 20 minutes
 
      // All CORS deployr calls require sticky sessions
-     if (win && globalOptions.cors) { this.req.withCredentials(); }    
+     if (win && globalOptions.cors) { this.req.withCredentials(); }
+
+     // Node.js - access an SSL endpoint with self signed certs for testing|dev
+     if (!win && globalOptions.allowSelfSignedSSLCert) {
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';        
+     }
   },
 
   /**
