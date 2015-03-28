@@ -29,12 +29,7 @@ var deployr = require('../../deployr'),
 
 deployr.configure({ host: config.endpoint, allowSelfSignedSSLCert: true });
 
-//
-// Execute R script `/author/directory/filename`
-// - author:    testuser
-// - directory: root
-// - filename:  DeployR - Hello World.R
-//
+// should run successfully...
 deployr.io('/r/server/info')
     .error(function(err) {
         console.log(err)
