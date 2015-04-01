@@ -45,7 +45,7 @@ var globalOptions = {
   events:{},
   set: function(prop, value) { 
     if (prop !== 'set') { 
-      if (prop === 'host') {         
+      if (prop === 'host' && value) {         
          // Be more forgiving on the entered DeployR 'endpoint':
          //   - http(s)://dhost:port
          //   - http(s)://dhost:port/deployr
