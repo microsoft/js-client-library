@@ -289,6 +289,10 @@ var DeployR = Base.extend(Emitter, RInputs, {
   abort: function () {
     this.req.abort();
     this.emit('abort');
+    this.deferred.reject(this._handleError({ 
+        status: 'abort',
+        text: 'DeployR request aborted.'
+    }));
 
     return this;
   },
