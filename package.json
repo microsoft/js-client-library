@@ -1,6 +1,6 @@
 {
   "name": "deployr",
-  "version": "7.4.0",
+  "version": "7.4.1",
   "description": "Simplified JavaScript client library for making requests to DeployR.",
   "keywords": [
     "deployr",
@@ -12,9 +12,7 @@
   ],
   "author": "DeployR - Revolution Analytics Inc.",
   "contributors": [
-    {
-      "name": "Sean Wells"
-    }
+    "Sean Wells"
   ],
   "repository": {
     "type": "git",
@@ -47,5 +45,12 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "license": "Apache 2.0 License"
+  "license": "Apache 2.0 License",
+  "bugs": {
+    "url": "https://github.com/deployr/js-client-library/issues"
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  }
 }
