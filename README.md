@@ -5,6 +5,41 @@ The JavaScript client library is a light-weight fluent API used to communicate
 with DeployR from both the browser and Node.js environments. It is crafted for 
 flexibility, readability, and a low learning curve.
 
+#### Easy anonymous R script execution:
+
+```js
+deployr.script('/sean/root/reducer.R')
+  .end(function(res) {
+     var artifacts = res.get('artifacts');
+  });
+```
+
+#### Easy authenticated R code execution:
+
+```js
+var r = 'x<-rnorm(10)';
+
+ruser.code(r)
+  .end(function(res) {
+     var out = res.get('console');
+  });
+```
+
+#### Easy I/O to and from R:
+
+```js
+deployr.script('/sean/root/shift.R')
+  .character('name', 'DeployR')
+  .numeric('x', 5)
+  .logical('up', true)
+  .routput('roboteer_dataframe')
+  .end(function(res) {
+     var objs = res.workspace('roboteer_dataframe');
+  });
+```
+
+And much more...
+
 Links
 -----
 
@@ -38,8 +73,7 @@ It is __not__ a requirement for the browser however using the JavaScript client
 library from within a server or from the command line in addition to the browser
 can be powerful!
 
-Browser
--------
+### Browser
 
 If your environment is the browser the JavaScript client library can be found
 here:
@@ -49,8 +83,7 @@ here:
 ./deployr/browser/deployr.min.js
 ```
 
-Node.js
--------
+### Node.js
 
 If your environment is Node then the entire root ```./deployr/``` directory 
 represents the JavaScript client library as it uses the same source for both 
@@ -59,8 +92,7 @@ environments.
 Installing
 ==========
 
-Browser
--------
+### Browser
 
 Using the browser version:
 
@@ -81,8 +113,7 @@ Or
 <script src="./browser/deployr.min.js"></script>
 ```
 
-Node.js
--------
+### Node.js
 
 1. [Download and install](http://nodejs.org/download/) Node.js, which includes 
 npm. npm, which stands for _node packaged modules_, is a way to manage 
@@ -113,8 +144,7 @@ suit your needs as you explore the API.
 - __./examples/tutorial:__ Introduces the top-level R analytics services exposed 
 on the DeployR API.
 
-Running
--------
+### Running
 
 __Browser:__
 
@@ -178,23 +208,20 @@ This section only pertains to the _Browser_ environment.
 
 Our dev and release builds are handled by [gulp.js](http://gulpjs.com/).
 
-Installation
-------------
+### Installation
 
 1. [Download and install](http://nodejs.org/download/) Node.js
 2. `$ npm install deployr`
 3. `$ cd ./deployr`
 4. `$ npm install` This will install the development tools needed to build locally.
 
-Targets
--------
+### Targets
 
  * `$ npm run build` - Runs a build.
  * `$ npm start` - Runs a build and starts a local webserver with LiveReload 
    on `http://localhost:8080` rebuilding on file changes.
 
-Destination
------------
+### Destination
 The browser build destination is located in the __./browser__ directory.
 
 Tests
