@@ -47,7 +47,6 @@ Links
   * [User Guide Documentation](http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc)
   * [API Documentation](http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/api)
   * [DeployR Reference Documentation](http://deployr.revolutionanalytics.com/documents/dev/api-doc)  
-  * [Using](http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/#install)  
   * [Simple examples](#examples)
   * [Gulp, for building](#building)
   * [Tests](#tests)
