@@ -56,7 +56,7 @@ Links
 Downloading
 ============
 
-There are a few diffrent was to obtaining the library depending on your 
+There are a few diffrent ways to obtain the library depending on your 
 environment and intended usage:
 
 - `$ npm install deployr` dependent on [Node.js](http://nodejs.org/download/)
