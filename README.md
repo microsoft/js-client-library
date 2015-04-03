@@ -119,11 +119,11 @@ Or
 npm. npm, which stands for _node packaged modules_, is a way to manage 
 development dependencies through Node.js.
 
-2. ```$npm install deployr```
+2. `$npm install deployr`
 
 3. `require` the directory:
 
-```
+```js
 var deployr = require('deployr');
 ```
 
@@ -153,7 +153,7 @@ __Browser:__
 - Set the DeployR endpoint and basic authentication credentials in 
 `./examples/config.json`
 
-```
+```json
 {
 	"endpoint": "http://dhost:port",
 	"credentials": {
@@ -186,7 +186,7 @@ __Node.js:__
 Set the DeployR endpoint and basic authentication credentials in 
 `./examples/config.json`
 
-```
+```json
 {
 	"endpoint": "http://dhost:port",
 	"credentials": {
