@@ -140,7 +140,8 @@ var DeployR = Base.extend(Emitter, RInputs, {
      this.delayed    = false;
      this.globalEvts = true; // suppress|raise global events fot this `io`     
      this.file       = null; 
-     this.filter     = null; 
+     this.entities   = null; 
+     this.ioFilter   = function() { return true; };
 
      // preset deployr's assigned response format for `this` api
      this.data({ format: this.api.format });
@@ -340,7 +341,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
    * @api public
    */
   entity: function (entity) {
-    this.filter = utils.inArray(TOPLEVEL_ENTITIES, entity);
+    this.entities = utils.inArray(TOPLEVEL_ENTITIES, entity);
 
     return this;
   },
@@ -417,6 +418,49 @@ var DeployR = Base.extend(Emitter, RInputs, {
 
     return this;
   },
+
+  /**
+   * The `filter(λ)` method removes this DeployR request from the request chain
+   * if the provided function does *not* pass the test implemented by it.
+   *
+   * Examples:
+   *
+   * ```
+   * // Remove from the request chain
+   * .filter(function(args) {
+   *    return 5 > 10;
+   * })
+   *
+   * // Keep in the request chain
+   * .filter(function(args) {
+   *    return 10 > 5;
+   * })   
+   * ```
+   *
+   * @method filter
+   * @param {Function} λ the callback function.
+   * @return {DeployR} for chaining
+   * @api public   
+   */
+  filter: function(fn) {
+    if (fn) {
+      this.ioFilter = function(prevArgs) {
+        var args = {}, keep;
+
+        // copy over previous arguments and filter out internal __cookies__ 
+        for (var key in prevArgs) {
+           if (key !== '__cookies__') { 
+              args[key] = prevArgs[key];
+           }
+        }
+
+        keep = fn(args);
+        return (keep || keep === false ? keep : true);
+      };
+    }
+
+    return this;
+  },  
   
   /**
    * Acts as a finally statement allowing you to execute "cleanup" type tasks 
@@ -504,16 +548,27 @@ var DeployR = Base.extend(Emitter, RInputs, {
    * @api public
    */ 
   end: function (fn) {
-    var self   = this,
-        q      = this.q,
-        api    = this.api,
-        args   = null,
-        entity = this.filter;
+    var self     = this,
+        q        = this.q,
+        api      = this.api,
+        args     = null,
+        entities =  this.entities;
 
     q.add(function(responseChain, error, prevArgs) {
       // break the call chain on error      
       if (error) {        
         this.deferred.reject(error);        
+        q.flush(responseChain, error, prevArgs); // drain the queue
+        this._clear();
+        return;
+      }
+
+      //
+      if (!this.ioFilter(prevArgs)) {
+        if (q.size() === 0) { 
+          this.deferred.resolve(responseChain || prevArgs);
+        }
+
         q.flush(responseChain, error, prevArgs); // drain the queue
         this._clear();
         return;
@@ -524,6 +579,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
       Logger.info('io()', api, this.req);
       this.logger.info('io()', api, this.req);    
 
+      // send next request
       this.req.end(function(res) {
         self.share(self.cookies || res.headers['set-cookie']);         
 
@@ -545,7 +601,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
            self.logger.info('end()', api, dres, res);
 
            // -- walk response for top-level entity response assignment --        
-           if (entity) { dres = dres.deployr.response[entity] || dres; }
+           if (entities) { dres = dres.deployr.response[entities] || dres; }
 
            dres.get = function(key) { 
               return utils.get(dres.deployr.response, key); 
@@ -871,14 +927,15 @@ var DeployR = Base.extend(Emitter, RInputs, {
    * @api private
    */
   _clear: function() {    
-    this.params  = {};
-    this.inputs  = [];
-    this.outputs = [];
-    this.rstream = false;
-    this.delayed = false;
-    this.api     = null;    
-    this.file    = null;  
-    this.filter  = null;
+    this.params   = {};
+    this.inputs   = [];
+    this.outputs  = [];
+    this.rstream  = false;
+    this.delayed  = false;
+    this.api      = null;    
+    this.file     = null;  
+    this.entities = null;
+    this.ioFilter = null;
   }, 
 
   /**
