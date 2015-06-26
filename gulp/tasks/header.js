@@ -178,7 +178,7 @@ function today() {
  *
  * Prefix the copyright information at the top.
  */
-gulp.task('header', ['uglifyjs'], function() {
+gulp.task('header', ['uglify'], function() {
     return gulp.src(config.dist + '/*.js')
           .pipe(header(banner, { pkg : config.pkg, date: { today: today() } } ))
           .pipe(gulp.dest(config.dist));
