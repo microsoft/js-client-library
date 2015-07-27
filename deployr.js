@@ -986,7 +986,8 @@ var DeployR = Base.extend(Emitter, RInputs, {
 
     if (this.api.upload) {    
       for(var p in this.params) {
-       req.field(p, this.params[p] ? this.params[p] + '' : '');  
+        req.field(p, (this.params[p] || this.params[p] === false) ? 
+           this.params[p] + '' : '');
       } 
       req.attach('file', this.rstream ? fs.createReadStream(file) : file);
     } else {
