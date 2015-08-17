@@ -58,7 +58,7 @@ var ruser = deployr.configure({ host: config.endpoint })
 var project   = null; 
 
 // R Code --> DeployR - Hello World.R
-var r = [ 'require(RevoScriptTools)',
+var r = [ 'require(deployrUtils)',
           'revoInput(\'{ "name": "input_randomNum", "label": "Sample size", "render": "integer", "default": 100, "min": 10, "max": 10000 }\')',
           'x<-rnorm(input_randomNum)',
           'plotTitle<-paste(\'Histogram of\', input_randomNum, "Random Values")',
