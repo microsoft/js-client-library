@@ -205,7 +205,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
   },  
 
   /**
-   * Shares the cookies from a diffrent `.io()` agent to preserve session state
+   * Shares the cookies from a differen `.io()` agent to preserve session state
    * across `this` request and all requests chained to it.
    *
    * @method share
@@ -563,7 +563,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
         return;
       }
 
-      //
+      // filter out responses    
       if (!this.ioFilter(prevArgs)) {
         if (q.size() === 0) { 
           this.deferred.resolve(responseChain || prevArgs);
@@ -1272,11 +1272,12 @@ module.exports = {
    * @return {EventStream} a new `EventStream` for binding.
    * @api public   
    */  
-  es: function(options) {    
-    var stream = EventStream.new(globalOptions.host, options);
+  es: function(credentials) {
+    var auth   = (credentials && credentials.username && credentials.password),
+        stream = EventStream.new(globalOptions.host, { yield: auth });
 
-    if (options && options.username && options.password) {
-      var ruser = this.auth(options.username, options.password);
+    if (auth) {
+      var ruser = this.auth(credentials.username, credentials.password);      
       ruser.ensure(function() { 
         stream.share(ruser.getCookies());
         stream.flush(); 

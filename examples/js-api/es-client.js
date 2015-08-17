@@ -42,9 +42,9 @@ var es = deployr.es(config.credentials)
     //
     //.project(pid)          // equivalent to es.open({ project: pid })
     //.job(jid)              // equivalent to es.open({ job: jid })
-    //.httpEventOnly()       // equivalent es.open({ httpEventOnly: true })
-    //.revoEventOnly()       // equivalent es.open({ revoEventOnly: true })
-    //.managementEventOnly() // equivalent es.open({ managementEventOnly: true })    
+    //.httpEventOnly()       // equivalent to es.open({ httpEventOnly: true })
+    //.revoEventOnly()       // equivalent to es.open({ revoEventOnly: true })
+    //.managementEventOnly() // equivalent to es.open({ managementEventOnly: true })    
     // --------------------------------------------------------------------
     //
     .on('es:connecting', function(data) {
