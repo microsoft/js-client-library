@@ -10,7 +10,7 @@
     "api",
     "simple"
   ],
-  "author": "DeployR - Revolution Analytics Inc.",
+  "author": "DeployR - Microsoft Corporation",
   "contributors": [
     "Sean Wells"
   ],
@@ -18,7 +18,7 @@
     "type": "git",
     "url": "git://github.com/deployr/js-client-library.git"
   },
-  "homepage": "http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc",
+  "homepage": "http://go.microsoft.com/fwlink/?LinkID=698842",
   "scripts": {
     "start": "gulp start",
     "build": "gulp"
