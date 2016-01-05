@@ -44,8 +44,8 @@ Links
 -----
 
   * [Download](#downloading)
-  * [User Guide Documentation](http://go.microsoft.com/fwlink/?LinkID=)
-  * [API Documentation](http://go.microsoft.com/fwlink/?LinkID=)
+  * [User Guide Documentation](http://deployr.revolutionanalytics.com/documents/dev/clientlib/)
+  * [API Documentation](http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/)
   * [DeployR Reference Documentation](http://go.microsoft.com/fwlink/?LinkID=708554 )  
   * [Simple examples](#examples)
   * [Gulp, for building](#building)
