@@ -1,5 +1,5 @@
 /*!
- * Copyright (C) 2010-2015 by Revolution Analytics Inc.
+ * Copyright (C) 2010-2016, Microsoft Corporation
  *
  * This program is licensed to you under the terms of Version 2.0 of the
  * Apache License. This program is distributed WITHOUT
@@ -1036,15 +1036,6 @@ var DeployR = Base.extend(Emitter, RInputs, {
     return error;
   }
 });
-
-/*****************************************************************************/
-/*****************************************************************************/
-/*****************************************************************************/
-
-// Include the `deprecated` jsDeployR for now.
-if (win) {
-  window.Revolution = window.Revolution || require('./lib/deprecated');
-}
 
 /*****************************************************************************/
 /*****************************************************************************/

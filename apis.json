@@ -318,7 +318,7 @@
     },
 
     "/r/repository/script/render": {
-        "method": "POST",
+        "method": "GET",
         "format": "json"
     },
 

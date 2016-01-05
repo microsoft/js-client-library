@@ -1,6 +1,6 @@
 {
   "name": "deployr",
-  "version": "7.4.3",
+  "version": "8.0.0",
   "description": "Simplified JavaScript client library for making requests to DeployR.",
   "keywords": [
     "deployr",
@@ -10,7 +10,7 @@
     "api",
     "simple"
   ],
-  "author": "DeployR - Revolution Analytics Inc.",
+  "author": "DeployR - Microsoft Corporation",
   "contributors": [
     "Sean Wells"
   ],
@@ -18,17 +18,17 @@
     "type": "git",
     "url": "git://github.com/deployr/js-client-library.git"
   },
-  "homepage": "http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc",
+  "homepage": "http://go.microsoft.com/fwlink/?LinkID=698842",
   "scripts": {
     "start": "gulp start",
     "build": "gulp"
   },
   "devDependencies": {
     "browserify": "^9.0.3",
-    "gulp": "^3.8.11",
+    "gulp": "^3.9.0",
     "gulp-connect": "^2.2.0",
     "gulp-header": "^1.2.2",
-    "gulp-jshint": "^1.9.2",
+    "gulp-jshint": "^2.0.0",
     "gulp-livereload": "^3.8.0",
     "gulp-plumber": "^0.6.6",
     "gulp-rename": "^1.2.2",    
