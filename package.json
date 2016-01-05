@@ -1,6 +1,6 @@
 {
   "name": "deployr",
-  "version": "7.4.3",
+  "version": "8.0.0",
   "description": "Simplified JavaScript client library for making requests to DeployR.",
   "keywords": [
     "deployr",
@@ -25,10 +25,10 @@
   },
   "devDependencies": {
     "browserify": "^9.0.3",
-    "gulp": "^3.8.11",
+    "gulp": "^3.9.0",
     "gulp-connect": "^2.2.0",
     "gulp-header": "^1.2.2",
-    "gulp-jshint": "^1.9.2",
+    "gulp-jshint": "^2.0.0",
     "gulp-livereload": "^3.8.0",
     "gulp-plumber": "^0.6.6",
     "gulp-rename": "^1.2.2",    
