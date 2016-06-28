@@ -1,13 +1,911 @@
-<!doctype html>
-<html>
-<head>
-    <title>Redirect</title>
-    <meta http-equiv="refresh" content="0; url=https://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/">
-</head>
-<body>
-<h1>Redirecting to our site...</h1>
-<p>
-If you see this, <a href="https://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/">click here to continue</a>.
-</p>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<meta name="description" content="DeployR - Simple R analytics integration for application developers.">
+<meta name="keywords" content="R,Simple,DeployR,Java,JavaScript,.NET,Statistics,Big Data">
+<meta name="author" content="Microsoft Corporation">
+<meta name="google-site-verification" content="BQWjliQil8coeYFDfd-nee7j5GDJ0p-6lU4abeJiAZU">
+
+<!--<time itemprop="buildDate" datetime="Thursday, April 21st, 2016, 7:47:06 AM PDT"></time>-->
+
+<title>
+  DeployR &middot; JavaScript Client Library
+</title>
+
+<!-- Favicons -->
+<link rel="shortcut icon" href="./assets/img/favicon.png" type="image/png" >
+<link rel="icon" href="./assets/img/favicon.png" type="image/png">
+
+<!-- Bootstrap styles -->
+<link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+
+<!-- Documentation extras -->
+<link href="./assets/css/github.css" rel="stylesheet">
+
+<!-- Google Webfonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,600" rel="stylesheet" type="text/css">
+
+<!-- Grove Styles (switch for different color schemes, e.g. "styles-cleanblue.css") -->
+<link rel="stylesheet" href="./assets/css/styles-blue.css" id="grove-styles">
+
+<!-- Site Styles -->
+<link href="./assets/css/site.css" rel="stylesheet">
+<style type="text/css">.bs-footer{border: none;}</style>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+     
+  </head>
+  <body data-spy="scroll" data-target="#sidenav">
+    <a class="sr-only" href="#content">Skip to main content</a>
+
+    <!-- master nav -->
+    <header>
+   <nav class="navbar navbar-default grove-navbar" role="navigation">
+      <div class="container">
+         <div class="navbar-header">
+            <a href="#" class="grove-toggle" data-toggle="collapse" data-target=".grove-nav">   
+            <i class="glyphicons show_lines"></i>  
+            </a>
+            <a href="./" class="navbar-brand">
+            <img src="./assets/img/rLogo.png" alt="DeployR"> DeployR
+            </a>
+         </div>
+       </div>
+   </nav>
+</header>
+
+
+    <!-- page title -->
+    <div class="widewrapper pagetitle strong-highlight">
+   <div class="container">
+      <h1>JavaScript Client Library <small>Introduction</small></h1>
+      <span class="product-version">
+         Version 8.0.5         
+      </span>
+   </div>
+</div>
+  
+    <div class="widewrapper sf-wrapper">
+      <div class="container content" role="main">
+        <div>
+          
+<div class="row"><div class="col-md-3" id="sidenav"><div class="bs-sidebar hidden-print hidden-xs hidden-sm" role="complementary"><ul class="nav bs-sidenav"><li class="active"><a href="#overview">Overview</a><ul class="nav"></ul></li><li><a href="#apilead">Full API Documentation</a><ul class="nav"></ul></li><li><a href="#install">Download and Install</a><ul class="nav"></ul></li><li><a href="#examples">Examples</a><ul class="nav"></ul></li><li><a href="#global">Global Object 'deployr'</a><ul class="nav"></ul></li><li><a href="#init">Initialization</a><ul class="nav"></ul></li><li><a href="#cors">CORS</a><ul class="nav"></ul></li><li><a href="#basics">Request Basics</a><ul class="nav"></ul></li><li><a href="#params">Passing Parameters</a><ul class="nav"><li><a class="toc-section-0" href="#rinput">R Inputs</a></li><li><a class="toc-section-0" href="#routput">R Outputs</a></li></ul></li><li><a href="#upload">File Upload</a><ul class="nav"><li><a class="toc-section-0" href="#browser">Browser</a></li><li><a class="toc-section-0" href="#nodejs">Node.js</a></li></ul></li><li><a href="#shutdown">Shutdown</a><ul class="nav"></ul></li><li><a href="#ensure">Finally</a><ul class="nav"></ul></li><li><a href="#abort">Aborting Request</a><ul class="nav"></ul></li><li><a href="#timeout">Request Timeout</a><ul class="nav"></ul></li><li><a href="#log">Logging</a><ul class="nav"></ul></li><li><a href="#error">Error Handling</a><ul class="nav"></ul></li><li><a href="#chain">Chaining Requests</a><ul class="nav"></ul></li><li><a href="#promise">Promises</a><ul class="nav"></ul></li><li><a href="#pipeline">Sequencing Requests</a><ul class="nav"></ul></li><li><a href="#pipe">Piping Data</a><ul class="nav"></ul></li><li><a href="#sugar">Verbose APIS</a><ul class="nav"></ul></li></ul></div></div><div class="col-md-9" role="main"><div class="container-fluid content doc-content"><h1 id="overview">Overview</h1>
+
+<p>The JavaScript client library is a light-weight <em>fluent</em> API used to communcate 
+with DeployR from both the browser and Node.js environments. It is crafted for 
+flexibility, readability, and a low learning curve. </p>
+<h1 id="apilead">Full API Documentation</h1>
+
+<p>The full DeployR <strong>JavaScript client library</strong> API can be found <a href="./api">here</a>.</p>
+<h1 id="install">Download and Install</h1>
+
+<ol>
+<li><p><a href="https://github.com/Microsoft/js-client-library/releases" target="_blank">Download the DeployR JavaScript client library</a> and begin using in your application to communicate with DeployR.  </p>
+</li>
+<li><p>Unzip the compressed folder. You will see the following structure:</li></p>
+<pre class="prettyprint"><span class="pln">deployr/</span><span class="pln"></span>
+<span class="pun">├──</span><span class="pln"> examples/</span>
+<span class="pun">├──</span><span class="pln"> gulp/</span>
+<span class="pun">├──</span><span class="pln"> lib/</span>  
+<span class="pun">├──</span><span class="pln"> browser</span><span class="pun">/</span><span class="pln"></span>
+<span class="pun">│ </span><span class="pln">    </span><span class="pun">├──</span><span class="pln"> deployr.js</span>
+<span class="pun">│ </span><span class="pln">    </span><span class="pun">└──</span><span class="pln"> deployr.min.js</span>
+<span class="pun">├──</span><span class="pln"> apis.json</span>
+<span class="pun">├──</span><span class="pln"> deployr.js</span>
+<span class="pun">├──</span><span class="pln"> gulpfile.js</span>
+<span class="pun">├──</span><span class="pln"> package.json</span>
+<span class="pun">├──</span><span class="pln"> LICENSE.md</span>
+<span class="pun">└──</span><span class="pln"> README.md</span></pre>
+
+<p>The base <code>deployr.js</code> file contains the source code for the DeployR JavaScript 
+client library. The <code>browser/</code> folder includes the precompiled <strong>browser only</strong> 
+version of the DeployR JavaScript client library. The <code>examples/</code> folder 
+includes both browser and Node.js samples. Beyond that, any other included file 
+provides support for packages, license information, and development.</p>
+</li>
+<li><p>Install the DeployR JavaScript client library using the instructions for your particular environment:</p>
+<p></p><ul class="code-tabs nav nav-tabs"><li class="active"><a href="#tab-BJkxmedwLg-0" data-toggle="tab" data-type="">Browser</a></li><li class=""><a href="#tab-BJkxmedwLg-1" data-toggle="tab" data-type="">Node.js</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab-BJkxmedwLg-0"><p></p>
+<pre><code>&lt;!-- Latest compiled raw JavaScript variation --&gt;
+&lt;script src=&quot;./browser/deployr.js&quot;&gt;&lt;/script&gt;
+
+Or
+
+&lt;!-- Latest compiled minified JavaScript variation --&gt;
+&lt;script src=&quot;./browser/deployr.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+<p></p></div><div class="tab-pane" id="tab-BJkxmedwLg-1"><p></p>
+<ol>
+<li><p><a href="http://nodejs.org/download/">Download and install</a> Node.js, which includes npm. npm, which stands for <em>node packaged modules</em>, is a way to manage development dependencies through Node.js.</p>
+</li>
+<li><p>From the command line:</p>
+<ol>
+<li><p>Navigate to the root <code>/deployr/</code> directory.</p>
+</li>
+<li><p>Run <code>npm install --production</code>. npm will look at the <code>package.json</code> file and automatically install the necessary local runtime dependencies listed there.</p>
+</li>
+</ol>
+</li>
+<li><p>Since the DeployR JavaScript client library is not yet registered as a public <em>npm package</em>, after running <code>npm install --production</code>, you will need to manually copy the entire <em>/deployr/</em> directory into the <em>node_modules</em> directory of the Node.js project that will be using it.</p>
+</li>
+<li><p><code>require</code> the directory:</p>
+<pre><code>var deployr = require(&#39;deployr&#39;);</code></pre>
+<p></p></div></div><p></p>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="examples">Examples</h1>
+
+<p>The DeployR <a href="https://github.com/Microsoft/js-client-library/releases">JavaScript client library</a>
+ships with a set of small examples under the <code>/deployr/examples</code> directory
+that run in both the Browser and Node.js environments. The intention of the 
+examples are to demonstrate the syntax and core areas of the API. They are 
+<strong>not</strong> intended to be a tutorial on how to write web applications.</p>
+<p>We encourage you to start here and customize these examples and adapt them to 
+suit your needs as you explore the API.</p>
+<h1 id="global">Global Object &#39;deployr&#39;</h1>
+
+<p>The <code>deployr.js</code> library provides the <code>deployr</code> object to your 
+application, which lets you make API requests to the DeployR server. All 
+interactions with the server will go through <code>deployr</code>.</p>
+<p>To see the full set of public supported features on the <code>deployr</code> object,
+view the <a href="./api/index.html#global">API</a> documentation.</p>
+<h1 id="init">Initialization</h1>
+
+<p>The <a href="./api/#configure">.configure()</a> method on the <code>deployr</code> object is an 
+optional static method for configuring all DeployR requests. Settings made here 
+are applied globally across every request. For example, initializing the 
+location of the DeployR server for all request using the <code>host</code> property:</p>
+<pre><code class="language-js">deployr.configure( { host: <span class="string">'http://dhost:8050'</span> });
+
+<span class="comment">// All subsequent requests will go to the DeployR server 'http://dhost:8050'</span></code></pre>
+<p>Or turn logging on:</p>
+<pre><code class="language-js">deployr.configure( { logging: <span class="literal">true</span> });
+
+<span class="comment">// All requests will now emit logging statements</span></code></pre>
+<p>Or enable cross-origin resource sharing (CORS) using the <code>cors</code> property:</p>
+<pre><code class="language-js">deployr.configure( { cors: <span class="literal">true</span>, host: <span class="string">'http://dhost:8050'</span> });
+
+<span class="comment">// All subsequent requests will go to the DeployR server 'http://dhost:8050'</span></code></pre>
+<p>What is CORS and why is it important? Read the <a href="#cors">next section</a> for the 
+answer.</p>
+<!--
+<span class="pull-right"><a class="btn btn-grove-one" href="./learn/configuration">Learn More: Configuration</a></span>
+-->
+
+<h1 id="cors">CORS</h1>
+
+
+<p><span class="label label-info">Note!</span> Cross-origin resource sharing (CORS)
+pertains to browser environments only.</p>
+<p>By default, the JavaScript client library uses the <code>XMLHttpRequest</code> object as the 
+transport for HTTP transactions to DeployR. As a result, the library is bound 
+by a security restriction, called <a href="http://en.wikipedia.org/wiki/Same_origin_policy" target="_blank">Same Origin Policy</a>, 
+which is imposed by all modern web browsers on network connections. This 
+constraint prevents a script or application from making a connection to any 
+web server other than the originating web page (cross-domain). Often, this 
+restriction is not an issue; however, there are obvious scenarios in which you 
+need your application using the JavaScript client library to be served-up on a 
+server other than the machine hosting DeployR. </p>
+<h3 id="how-to">How To</h3>
+<ol>
+<li><p>Make sure <b>CORS is enabled</b></a> on DeployR in the <code>deployr.groovy</code> file. If it isn&#39;t, enable it now.</p>
+</li>
+<li><p>In your JavaScript, indicate that the requests will be using CORS. This is done through the <code>deployr.configuration()</code> method using the <code>cors</code> property:</p>
+</li>
+</ol>
+<pre><code>// Where http://dhost:8050 is the Cross-origin DeployR server
+deployr.configure( { cors: true, host: &#39;http://dhost:8050&#39; });</code></pre>
+<h3 id="browser-support">Browser Support</h3>
+<p>CORS is supported on the following browser versions:</p>
+<table>
+<thead>
+<tr>
+<th>Browser</th>
+<th>Version(s)</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Internet Explorer<sup>&#43;</sup></td>
+<td>10.0</td>
+<td></td>
+</tr>
+<tr>
+<td>Chrome<sup>&#43;</sup></td>
+<td>Latest stable</td>
+<td></td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>Latest stable</td>
+<td></td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>Safari 6.1 <br> (OS X 10.8)</td>
+<td>Safari 7.x <br>(OS X 10.9)</td>
+</tr>
+</tbody>
+</table>
+<div class="well well-sm"><sup>&#43;</sup>Internet Explorer 10 and Safari users: <br/>3rd party cookies are disabled by default. For CORS to work with DeployR in these browsers, 3rd party cookies must be allowed by the browser as follows:
+<br/>- For <strong>IE 10</strong>: Internet Options &gt; Privacy &gt; Advanced &gt; Third Party Cookies &gt; Accept
+<br/>- For <strong>Safari</strong>: Preferences &gt; Privacy &gt; Block Cookies &gt; Never
+</div>
+
+
+<h1 id="basics">Request Basics</h1>
+
+
+<p>The <a href="./api#_io">.io()</a> method on the <code>deployr</code> object is the static method 
+for making a DeployR request. This method accepts a single DeployR API service 
+argument:</p>
+<ul>
+<li><a href="https://microsoft.github.io/deployr-api-docs#users">User APIs</a></li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#projects">Project APIs</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#jobs">Job APIs</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#repository">Repository APIs</a> </li>
+</ul>
+<p>A request to DeployR can be initiated by providing the appropriate API to the
+ <code>deployr.io()</code> method, then calling <code>.end()</code> to send the request. For 
+ example, a simple request to retrieve details about the currently authenticated 
+ user:</p>
+<pre><code class="language-js">deployr.io(<span class="string">'/r/user/about'</span>)
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response</span>
+   });</code></pre>
+<p>Requests can also be broken up into multiple lines rather than chaining. The 
+following example is equivalent to the previous:</p>
+<pre><code class="language-js"><span class="keyword">var</span> userAbout = deployr.io(<span class="string">'/r/user/about'</span>);
+
+userAbout.end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+   <span class="comment">// handle successful response</span>
+});</code></pre>
+<p>Deciding which approach to use is mostly a matter of preference however method 
+chaining can offer a convenience in some use-cases where a more <em>fluid</em> and
+expressive API call structure in needed. Please see the section on <a href="#chain">Chaining Requests</a>
+to learn more.</p>
+<div class="alert alert-warning"><strong>Important! </strong> 
+  A request to DeployR will <strong>not</strong> be sent until the <code>.end()</code> method is called.
+</div>
+
+
+<h1 id="params">Passing Parameters</h1>
+
+<p>For each DeployR API service call, there is a documented list of required and 
+optional parameters that can be sent:</p>
+<ul>
+<li><a href="https://microsoft.github.io/deployr-api-docs#users">User APIs</a></li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#projects">Project APIs</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#jobs">Job APIs</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#repository">Repository APIs</a> </li>
+</ul>
+<p>Data is passed using the <a href="./api#data">.data()</a> method chained-off the returned 
+<code>.io()</code> request object. A typical DeployR request might look a little like 
+this:</p>
+<pre><code class="language-js">deployr.io(<span class="string">'/r/user/login'</span>)
+   .data({ username: <span class="string">'testuser'</span> , password: <span class="string">'secret'</span> })
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response</span>
+   });</code></pre>
+<p>Or using multiple <code>.data()</code> calls:</p>
+<pre><code class="language-js">deployr.io(<span class="string">'/r/user/login'</span>)
+  .data({ username: <span class="string">'testuser'</span> })
+  .data({ password: <span class="string">'secret'</span> })
+  .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+     <span class="comment">// handle successful response</span>
+  });</code></pre>
+<p>Or broken up into multiple lines:</p>
+<pre><code class="language-js"><span class="keyword">var</span> userLogin = deployr.io(<span class="string">'/r/user/login'</span>);
+
+userLogin.data({ username: <span class="string">'testuser'</span> });
+
+<span class="comment">// do not send empty passwords!</span>
+<span class="keyword">if</span> (password) {
+   userLogin.data({ password: password });
+   userLogin.end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response</span>
+   });
+}</code></pre>
+<h2 id="rinput">R Inputs</h2>
+
+<p>DeployR-specific encodings are used to encode R object data for use on the API.
+Encoded object data can be sent to the server as parameter values on the 
+following calls:</p>
+<ul>
+<li><a href="https://microsoft.github.io/deployr-api-docs/#r-project-workspace-push">/r/project/workspace/push</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs/#r-project-execute-script">/r/project/execute/script</a></li>
+<li><a href="https://microsoft.github.io/deployr-api-docs/#r-repository-script-execute">/r/repository/script/execute</a></li>
+</ul>
+<p>To pass values from JavaScript as input to an R script you use one of the defined
+R data type <a href="./learn/rinputs/">methods</a>.</p>
+<p>This example uses both the <code>.numeric()</code> and <code>.logical()</code> methods to pass a 
+JavaScript <em>Number</em> <strong>10</strong> and a <em>Boolean</em> <strong>true</strong> to an R script:</p>
+<pre><code class="language-js">deployr.io(<span class="string">'/r/repository/script/execute'</span>)   
+   .data({ filename: <span class="string">'map.R'</span>, author: <span class="string">'testuser'</span> })
+   .numeric(<span class="string">'randomNum'</span>, <span class="number">10</span>)
+   .logical(<span class="string">'reduce'</span>, <span class="literal">true</span>)
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response</span>
+   });</code></pre>
+<p>The R script <em>map.R</em> has reviced the input decoded into their proper types:</p>
+<pre><code>#######################
+# map.R
+#######################
+
+# prints 10
+print(randomNum)
+
+# prints TRUE
+print(reduce)</code></pre>
+<p>At times it might not be convenient to use the R data type <a href="./learn/rinputs/">methods</a>
+inlined like this so we provide both the <code>.rinput()</code> and <code>.rinputs()</code> methods.
+These allow you to construct R inputs ahead of time using the <code>deployr.RInput</code> 
+factory and pass them in.</p>
+<p>For example, using the <code>.rinputs()</code> method to specify multiple R inputs at 
+once:</p>
+<pre><code class="language-js"><span class="keyword">var</span> RIn     = deployr.RInput;
+<span class="keyword">var</span> rinputs = [ RIn.numeric(<span class="string">'randomNum'</span>, <span class="number">10</span>), RIn.logical(<span class="string">'reduce'</span>, <span class="literal">true</span>) ];
+
+deployr.io(<span class="string">'/r/repository/script/execute'</span>)   
+   .data({ filename: <span class="string">'map.R'</span>, author: <span class="string">'testuser'</span> })
+   .rinputs(rinputs)   
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response</span>
+   });</code></pre>
+<p>Or a single R input at a time using the <code>.rinput()</code> method:</p>
+<pre><code class="language-js"><span class="keyword">var</span> RIn       = deployr.RInput;
+<span class="keyword">var</span> randomNum = RIn.numeric(<span class="string">'randomNum'</span>, <span class="number">10</span>);
+<span class="keyword">var</span> reduce    = RIn.logical(<span class="string">'reduce'</span>, <span class="literal">true</span>);
+
+deployr.io(<span class="string">'/r/repository/script/execute'</span>)   
+   .data({ filename: <span class="string">'map.R'</span>, author: <span class="string">'testuser'</span> })
+   .rinput(randomNum)
+   .rinput(reduce)   
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response</span>
+   });</code></pre>
+<p><strong>Note</strong> all three examples are equivalent to one another.</p>
+<p><br></p>
+<p><span class="pull-right"><a class="btn btn-grove-one" href="./learn/rinputs">Learn More: R Inputs</a></span></p>
+<p><br></p>
+<h2 id="routput">R Outputs</h2>
+
+<p>You can retrieve a list of object names that will be returned as DeployR-encoded 
+R objects on the response markup after a script execution completes. To specify
+a list of object names from a service you use the <a href="./api#routput">.routput()</a> 
+method. For example:</p>
+<pre><code class="language-js">deployr.io(<span class="string">'/r/repository/script/execute'</span>)
+   .data({ filename: <span class="string">'ReadCSV.R'</span>, author: <span class="string">'testuser'</span> })
+   .routput(<span class="string">'output_vars'</span>)
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response        </span>
+   });</code></pre>
+<p>Or multiple DeployR-encoded R objects spread out over multiple <code>.routput()</code> 
+method calls:</p>
+<pre><code class="language-js">deployr.io(<span class="string">'/r/repository/script/execute'</span>)
+   .data({ filename: <span class="string">'TimeSeries.R'</span>, author: <span class="string">'testuser'</span> })
+   .routput(<span class="string">'output_min'</span>)
+   .routput(<span class="string">'output_max'</span>)
+   .routput(<span class="string">'output_mean'</span>)
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response    </span>
+   });</code></pre>
+<p>Or using the <a href="./api#routputs">.routputs()</a> method to specify multiple 
+DeployR-encoded R objects at once in a single call using an Array:</p>
+<pre><code class="language-js">deployr.io(<span class="string">'/r/repository/script/execute'</span>)
+   .data({ filename: <span class="string">'TimeSeries.R'</span>, author: <span class="string">'testuser'</span> })
+   .routputs([ <span class="string">'output_min'</span>, <span class="string">'output_max'</span>, <span class="string">'output_mean'</span> ])
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response</span>
+   });</code></pre>
+
+<h1 id="upload">File Upload</h1>
+
+<p>The following DeployR APIS support file uploads:</p>
+<ul>
+<li><a href="../api-doc/guide/single.html#projectworkspaceupload">/r/project/workspace/upload</a></li>
+<li><a href="../api-doc/guide/single.html#projectdirectoryupload">/r/project/directory/upload</a></li>
+<li><a href="../api-doc/guide/single.html#repositorydirectoryupload">/r/repository/directory/upload</a></li>
+<li><a href="../api-doc/guide/single.html#repositoryfileupload">/r/repository/file/upload</a></li>
+</ul>
+<p>A high-level JavaScript client API is provided in the form of the 
+<a href="./api#attach">.attach()</a> method for performing individule file uploads. The 
+argument types in the signature are diffrent depending on if you are running in 
+the Browser or Node.js:</p>
+<p><strong>Browser:</strong> <code>.attach(File|Blob, filename)</code> </p>
+<p><strong>Node.js:</strong> <code>.attach(&#39;/path/to/the/file&#39;, filename)</code></p>
+<p><span class="label label-info">Note!</span> The <em>filename</em> is an optional 
+convenience argument.</p>
+<h2 id="browser">Browser</h2>
+
+<p>Assuming we have an HTML <code>&lt;input&gt;</code> element with a <strong>type</strong> value set to <strong><em>file</em></strong> 
+in the page:</p>
+<pre><code class="language-html">&lt;input id=&quot;csv-file&quot; type=&quot;file&quot;&gt;</code></pre>
+<p>And using the HTML5 <a href="http://www.w3.org/TR/FileAPI/">File API</a>, we can extract the 
+File Object from the <code>&lt;input&gt;</code> element and feed it to the <code>.attach()</code> 
+method:</p>
+<pre><code>// HTML5 File Object
+var file = document.getElementById(&#39;csv-file&#39;).files[0];
+
+deployr.io(&#39;/r/repository/file/upload&#39;)
+   .data({ filename: &#39;satscores.csv&#39;, descr: &#39;SAT scores by state.&#39; })    
+   .attach(file)
+   .end();</code></pre>
+<p>Or with the HTML5 <a href="http://www.w3.org/TR/file-upload/#dfn-Blob">Blob</a> object. The 
+end result of the following example is equivalent to the previous:</p>
+<pre><code>// HTML5 Blob object (satscore.csv)
+var satscores = &#39;State, PctSAT, VerbalSAT, MathSAT, AveSAT&#39; +
+                &#39;Alabama, 8, 491, 538, 1029&#39; +
+                &#39;Alaska, 47, 445, 489, 934&#39;;
+
+var blob = new Blob([satscores], { type: &quot;text/plain;charset=UTF-8&quot; });    
+
+deployr.io(&#39;/r/repository/file/upload&#39;)
+   .data({ filename: &#39;satscores.csv&#39;, descr: &#39;SAT scores by state.&#39; })    
+   .attach(blob)
+   .end();</code></pre>
+<p>For convenience you can drop the <em>filename</em>  property from <code>.data()</code> call
+and include it in the <code>.attach()</code> method:</p>
+<pre><code>// HTML5 File Object
+var file = document.getElementById(&#39;csv-file&#39;).files[0];
+
+deployr.io(&#39;/r/repository/file/upload&#39;)
+   .attach(file, &#39;satscores.csv&#39;)
+   .end();</code></pre>
+<h2 id="nodejs">Node.js</h2>
+
+<p>A single file can be attached and uploaded by providing a path to the file:</p>
+<pre><code>#!/usr/bin/env node
+
+var filepath = &#39;/path/to/satscore.csv&#39;;
+
+deployr.io(&#39;/r/repository/file/upload&#39;)
+   .data({ filename: &#39;satscores.csv&#39;, descr: &#39;SAT scores by state.&#39; })    
+   .attach(filepath)
+   .end();</code></pre>
+<p>Similar to the browser, you can drop the <em>filename</em>  property from <code>.data()</code> 
+call and include it in the <code>.attach()</code> method call:</p>
+<pre><code>#!/usr/bin/env node
+
+var filepath = &#39;/path/to/satscore.csv&#39;;
+
+deployr.io(&#39;/r/repository/file/upload&#39;)
+   .attach(filepath, &#39;satscores.csv&#39;)
+   .end();</code></pre>
+<!--
+<span class="pull-right"><a class="btn btn-grove-one" href="./learn/upload">Learn More: File upload</a></span>
+-->
+
+<h1 id="shutdown">Shutdown</h1>
+
+<p>It is the responsibility of the application developer to make an explicit call 
+to release any residual resources associated with the application instance 
+whenever a client application terminates. For example:</p>
+<pre><code>var ruser = deployr.io(&#39;/r/user/login&#39;)
+              .data( { username: &#39;testuser&#39;, password: &#39;secret&#39; } )
+              .end();
+
+// ...
+
+// close all allocated projects by id and logout
+
+var openProjects   = projectIds.length - 1,
+    closedProjects = 0; // counter
+
+projectIds.forEach(function(project) {
+    ruser.io(&#39;/r/project/close&#39;) 
+      .data({ project: project })
+      .end(function() {
+         // logout when [all] projects are closed
+         if (openProjects === closedProjects) {
+            ruser.io(&#39;/r/user/logout&#39;).end(); 
+         }
+         closedProjects++;
+      }); 
+});</code></pre>
+<p>To aid in this process the <a href="./api#release">.release()</a> convenience method is 
+supplied. It takes an (optional) argument of a project or an array  of projects. </p>
+<p>Close a single project and logout:</p>
+<pre><code>ruser.release(project);</code></pre>
+<p>Or close an array of projects and logout:</p>
+<pre><code>ruser.release([project1, project2, ...]);</code></pre>
+<p>Or just logout:</p>
+<pre><code>ruser.release();</code></pre>
+<h1 id="ensure">Finally</h1>
+
+<p>The <a href="./api#always">.ensure(λ)</a> method acts as a <em>finally</em> statement allowing you to execute 
+&quot;cleanup&quot; type tasks in a request chain. It arranges for cleanup to be called, 
+with no arguments, when the DeployR request chain is either completely fulfilled 
+or rejected. </p>
+<p>For example:</p>
+<pre><code>var ruser = deployr.io(&#39;/r/user/login&#39;)
+  .data({ username: &#39;testuser&#39; , password: &#39;secret&#39; }) 
+  .end();
+
+// do something...
+// ...
+// ...
+
+ruser.io(&#39;/r/user/about&#39;)
+  .end()  
+  .ensure(function() {
+    // `ensure()` will always be called last regardless a failure or success
+    console.log(&#39;cleanup...&#39;); 
+  });</code></pre>
+<p>The <code>.ensure()</code> method is a good place to cleanup resources such as open 
+projects or to log users out. It works nicly with the <a href="#release">.release()</a>
+method:</p>
+<pre><code>var ruser = // assuming authentication `/r/user/login`
+
+// assuming a project has already been created in aother task and the id stored
+var project = &#39;PROJECT-5ac47aff-8f8c-4ac2-8a8f-6e31468e6a19&#39;;
+
+ruser.io(&#39;/r/project/script/execute&#39;)
+  .data({ filename: &#39;script.R&#39;, author: &#39;testusesr&#39;, project: project }) 
+  .end()
+  .ensure(function() {
+    // closes project and logs user out
+    ruser.release(project); 
+  });</code></pre>
+<h1 id="abort">Aborting Request</h1>
+
+<p>A request to DeployR can be stopped if it has already been sent by using the
+<a href="./api#abort">.abort()</a> method:</p>
+<pre><code class="language-js"><span class="keyword">var</span> rscript = deployr.io(<span class="string">'/r/repository/script/execute'</span>);
+
+rscript.data({ filename: <span class="string">'LongRunningScript.R'</span>, author: <span class="string">'testuser'</span> });
+rscript.end();
+
+<span class="comment">// if request is still being executed, stop it.</span>
+rscript.abort();</code></pre>
+<h1 id="timeout">Request Timeout</h1>
+
+<p>A timeout can be applied to a request by invoking the 
+<a href="./api#timeout">.timeout(ms)</a> method. The timeout duration is defined in 
+milliseconds, for example:</p>
+<pre><code class="language-js">deployr.io(<span class="string">'/r/user/login'</span>)
+   .data({ username: <span class="string">'testuser'</span> , password: <span class="string">'secret'</span> }).
+   .timeout(<span class="number">10000</span>) <span class="comment">// timeout after 10 seconds</span>
+   .end();</code></pre>
+<h1 id="log">Logging</h1>
+
+<p>Logging can be turned on for a <strong>individual</strong> request by calling the 
+<a href="./api#log">.log()</a> method or for <strong>all</strong> requests globally through the 
+<code>deployr.configure( { logging: true } )</code> method found 
+<a href="./api#configure">here</a>. To remove logging simpily remove the <code>.log()</code> call 
+or set <code>{ logging: false }</code>, respectively.</p>
+<p>Logging for an <strong>individual</strong> request:</p>
+<pre><code>deployr.io(&#39;/r/user/about&#39;)
+   .log()
+   .end(function(res) {
+      // handle successful response
+   });</code></pre>
+<p>Or global logging applied to <strong>all</strong> requests:</p>
+<pre><code>// All requests will emit logging statements
+deployr.configure( { logging: true });
+
+deployr.io(&#39;/r/user/about&#39;)
+   .end(function(res) {
+      // handle successful response
+   });
+
+deployr.io(&#39;/r/user/logout&#39;)
+   .end(function(res) {
+      // handle successful response
+   });</code></pre>
+<p>If you intend to log all requests globally, <code>.log()</code> should be removed as it
+is redundant.</p>
+<!--
+<span class="pull-right"><a class="btn btn-grove-one" href="./learn/log">Learn More: Logging</a></span>
+-->
+
+<h1 id="error">Error Handling</h1>
+
+<p>You can capture all DeployR  errors for a request using the 
+<a href="./api#error">.error(λ)</a> method:</p>
+<pre><code>deployr.io(&#39;/r/user/login&#39;)    
+   .data({ username: &#39;testuser&#39;, password: &#39;secret&#39; })
+   .error(function(err) {
+       // handle failure    
+   })
+   .end(function(res) {
+       // handle successful response
+   });</code></pre>
+<p>Or you can add an event listener to capture all DeployR errors for a request 
+using the <code>.on()</code> method. The following example is equivalent to the previous:</p>
+<pre><code>deployr.io(&#39;/r/user/login&#39;)    
+   .data({ username: &#39;testuser&#39;, password: &#39;secret&#39; })
+   .on(&#39;error&#39;, function(err) {
+       // handle failure    
+   })
+   .end(function(res) {
+       // handle successful response
+   });</code></pre>
+<p>In addition, capturing specific <a href="./learn/error/#codes">DeployR  errors</a> for a 
+request can be achieved using the <code>.on()</code> method and passing in the name of 
+the error. For example, catching a DeployR  <code>409</code> concurrency error when a 
+project is busy on another call:</p>
+<pre><code>deployr.io(&#39;/r/project/execute/script&#39;)
+   .data({ filename: &#39;Regression.R&#39;, author: &#39;testuser&#39;, project: pid })
+   .on(&#39;deployr-io:409&#39;, (function(err) {
+      // Conflict: project is currently busy on call, concurrent call rejected  
+   })
+   .end(function(res) {
+      // handle successful response
+   });</code></pre>
+<p><span class="pull-right"><a class="btn btn-grove-one" href="./learn/error">Learn More: Error handling</a></span></p>
+<p><br></p>
+<h1 id="chain">Chaining Requests</h1>
+
+<p>The DeployR JavaScript client library is a <em>fluent</em> API which allows for writing 
+very concise expressions. Asynchronous requests can be processed <strong><em>sequentially</em></strong> 
+without a nasty callback pyramid. Sequential request chaining can be 
+accomplished by tying together aditional <a href="./api#io">.io()</a> calls:</p>
+<pre><code class="language-js">deployr.io(<span class="string">'/r/user/login'</span>)
+   .data({ username: <span class="string">'testuser'</span> , password: <span class="string">'secret'</span> })
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+
+   })
+   .io(<span class="string">'/r/user/about'</span>)
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res, chain)</span> {</span>
+
+    })
+   .io(<span class="string">'/r/user/logout'</span>)
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res, chain)</span> {</span>
+
+    });</code></pre>
+<p>The order of execution is guaranteed while remaining asynchronous. If an error
+occures the request chain is broken and any further calls are voided. </p>
+<p>An additional argument is provided to the <code>.end(function(res, chain) {})</code> 
+callback function when chaining requests. The second argument represents the 
+successful response chain array from the previous calls. This is often useful 
+when the next request depends on the response of a previous call:</p>
+<pre><code>// ----- Login -----
+deployr.io(&#39;/r/user/login&#39;)
+   .data({ username: &#39;testuser&#39; , password: &#39;secret&#39; })                   
+   .end()
+   // ----- Create a new Project -----
+   .io(&#39;/r/project/create&#39;)
+   .end(function(res, chain) {
+      // Returing an object literial from end() will get merged onto the next
+      // call&#39;s parameter list
+      return { project: res.get(&#39;project&#39;) };
+   })
+   // ----- Execute a script on the previous Project -----
+   .io(&#39;/r/project/execute/script&#39;)
+   .data({ filename : &#39;DeployR - Hello World&#39;, author: &#39;testuser&#39; })
+   .numeric(&#39;input_randomNum&#39;, 10)
+   .end(function(res, chain) {
+      // Returing an object literial from end() will get merged onto the next
+      // request. Here we attach the project ID from the `/r/project/create` 
+      // invocation two calls previous
+      return { project: chain[1].get(&#39;project&#39;) };
+   })
+   // ----- Close the Project -----
+   .io(&#39;/r/project/close&#39;)        
+   .end()
+   // ----- Logout -----
+   .io(&#39;/r/user/logout&#39;)
+   .end();</code></pre>
+<p>It is suttle, however you will notice returing an object literial from an 
+<code>.end()&#39;s</code> callback will get merged onto the next request and passed over.</p>
+
+<h1 id="promise">Promises</h1>
+
+<p>The DeployR JavaScript library supports the implementation of the
+<a href="http://promisesaplus.com/">promises/A+</a> specifications:</p>
+<pre><code>deployr.io(&#39;/r/user/login&#39;)
+  .data({ username: &#39;testuser&#39;, &#39;secret&#39; })
+  .end()
+  .then(function(res) {
+    return res; // pass result to the next `.then()` if any...
+  }, function(err) {
+    console.log(err);
+  });</code></pre>
+<p>Or chained together:</p>
+<pre><code>deployr.io(&#39;/r/user/login&#39;)
+  .data({ username: &#39;testuser&#39;, &#39;secret&#39; })
+  .end()
+  .then(task1)
+  .then(task2)
+  .then(task3);</code></pre>
+<h1 id="pipeline">Sequencing Requests</h1>
+
+<p>Somtimes it is necessary to run an series of chained DeployR requests in sequence 
+and without overlap. Managing this asynchronously while maintaining execution 
+order can get messy. For that reason the DeployR JavaScript library provies the
+<a href="./api#pipeline">deployr.pipeline()</a> method:</p>
+<pre><code>function firstTask() {
+    return deployr.io(&#39;/r/user/login&#39;)
+             .delay()
+             .data({ username: &#39;testuser&#39;, password: &#39;secret&#39; })    
+             .end()             
+             .io(&#39;/r/project/create&#39;)
+             .end();
+}
+
+function secondTask() {
+    return deployr.io(&#39;/r/user/about&#39;)
+             .delay()
+             .end()
+             .io(&#39;/r/user/logout&#39;)
+             .end();
+}
+
+// Runs the `firstTask` task batch first and when complete will run the 
+// `secondTask` batch without overlap
+
+deployr.pipeline([firstTask(), secondTask()]);</code></pre>
+<p>The return value for a call to <code>.pipeline()</code> will be a <a href="#promise">promise</a>:</p>
+<pre><code>deployr.pipeline(tasks)
+.then(function(chain) {
+
+    // `chain` contains the result for each request in each task that ran
+    // through the pipeline
+
+    chain.results.forEach(function(task, index) {
+        console.log(&#39;---------------------------------&#39;);
+        console.log(&#39;Task &#39; + index + &#39; results&#39;);
+        console.log(&#39;---------------------------------&#39;);
+        task.forEach(function(result) { console.log(result); });        
+    });
+
+}, function(err) {
+   // All the task batches were rejected 
+});</code></pre>
+<h1 id="pipe">Piping Data</h1>
+
+<blockquote>
+<p>Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface. <br><br> -- Doug McIlroy, inventor of Unix pipes and one of the founders of the Unix tradition</p>
+</blockquote>
+<p>The Node.j client allows you to pipe data to and from the DeployR request. 
+For example, piping the content of a file as the request:</p>
+<pre><code class="language-js">deployr.io(<span class="string">'/r/repository/file/upload'</span>)   
+   .attach(<span class="string">'/path/to/the/file'</span>, <span class="string">'satscores.csv'</span>)
+   .stream() <span class="comment">// creates a readable stream</span>
+   .end();</code></pre>
+<p>Or piping the DeployR response to a writable stream:</p>
+<pre><code class="language-js"><span class="keyword">var</span> fs = require(<span class="string">'fs'</span>);
+
+deployr.io(<span class="string">'/r/repository/script/execute'</span>)  
+   .data({ filename : <span class="string">'Map.R'</span>, author: <span class="string">'testuser'</span> })
+   .pipe(fs.createWriteStream(__dirname + <span class="string">'/deployr.log'</span>));</code></pre>
+<p>Or chain multiple <code>.pipe()</code> calls together using the Node.js <a href="http://nodejs.org/api/stream.html">Stream</a> interface.
+For example, using the popular <a href="https://github.com/dominictarr/JSONStream">JSONStream</a> 
+library to apply a data transform on the DeployR response:</p>
+<pre><code>// prase all file urls out of the response and stream them to stdout
+var JSONStream = require(&#39;JSONStream&#39;);
+
+deployr.io(&#39;/r/repository/script/execute&#39;)  
+  .data({ filename : &#39;DeployR - Hello World&#39;, author: &#39;testuser&#39; })
+  .numeric(&#39;input_randomNum&#39;, 10)
+  .pipe(JSONStream.parse(&#39;deployr.response.execution.artifacts.*.url&#39;))  
+  .pipe(JSONStream.stringify(false))
+  .pipe(process.stdout);</code></pre>
+<!--
+<span class="pull-right"><a class="btn btn-grove-one" href="./learn/pipe">Learn More: Piping data</a></span>
+-->
+
+<h1 id="sugar">Verbose APIS</h1>
+
+<p>The DeployR JavaScript client library supplies some <em>sugar</em> methods 
+<a href="./api#_auth">.auth()</a> and <a href="./api#_script">.script()</a> for a couple API 
+invocations that are a little verbose and redundant:</p>
+<ul>
+<li><p><strong>/r/user/login</strong> </p>
+<p> From:</p>
+<pre><code> deployr.io(&#39;/r/user/login&#39;)
+   .data({ username: &#39;testuser&#39;, password: &#39;secret&#39; })
+   .end();</code></pre>
+<p> To:</p>
+<pre><code> deployr.auth(&#39;testuser&#39;, &#39;secret&#39;);</code></pre>
+</li>
+<li><p><strong>/r/repository/script/execute</strong> </p>
+<p> From:</p>
+<pre><code> deployr.io(&#39;/r/repository/script/execute&#39;)
+   .data({ filename: &#39;script.R&#39;, author: &#39;testuser&#39;, directory: &#39;root&#39; })
+   .end();</code></pre>
+<p> To:</p>
+<pre><code> deployr.script(&#39;/testuser/root/script.R&#39;).end();</code></pre>
+<p> Or:</p>
+<pre><code> deployr.script(&#39;script.R&#39;, &#39;testuser&#39;, &#39;root&#39;).end();</code></pre>
+<p> Or:</p>
+<pre><code> deployr.script({ 
+      filename: &#39;script.R&#39;, 
+      author: &#39;testuser&#39;, 
+      directory: &#39;root&#39; 
+ }).end();</code></pre>
+</li>
+<li><p><strong>/r/project/execute/script</strong></p>
+<p> From:</p>
+<pre><code> var project = &#39;PROJECT-5ac47aff-8f8c-4ac2-8a8f-6e31468e6a19&#39;;
+
+ deployr.io(&#39;/r/repository/script/execute&#39;)
+   .data({ 
+       filename: &#39;script.R&#39;, 
+       author: &#39;testuser&#39;, 
+       directory: &#39;root&#39;,
+       project: project
+   })
+   .end();</code></pre>
+<p> To:</p>
+<pre><code> deployr.script(&#39;/testuser/root/script.R&#39;, project).end();</code></pre>
+<p> Or:</p>
+<pre><code> deployr.script(&#39;script.R&#39;, &#39;testuser&#39;, &#39;root&#39;, project).end();</code></pre>
+<p> Or:</p>
+<pre><code> deployr.script({ 
+      filename: &#39;script.R&#39;, 
+      author: &#39;testuser&#39;, 
+      directory: &#39;root&#39;,
+      project: project
+ }).end()</code></pre>
+</li>
+</ul>
+<p>This is completely optional and comes down to preference. It aims at (hopefully) 
+making the more frequently used APIS easier to understand and write.</p>
+</div></div></div>
+        </div>    
+      </div>
+      <div class="push" style=""></div>
+    </div>
+
+    <!-- Footer
+    ================================================== -->
+
+    <footer class="widefooter bs-footer foo" style="">
+       <div class="container">
+          <div class="row footer" style="height:-800px;"></div>
+       </div>          
+    </footer> 
+
+    
+    <!-- JS and analytics only. -->
+    <!-- Bootstrap core JavaScript
+================================================== -->
+<script src="./assets/js/bootstrap.min.js"></script>
+<script src="./assets/js/modernizr.js"></script>
+<script src="./assets/js/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- TOC
+================================================= -->
+<script>
+  // back to top
+  setTimeout(function () {
+     var $sideBar = $('.bs-sidebar');
+     if (!$sideBar) { return; }
+     $sideBar.affix({
+     offset: {
+     top: function () {
+        var offsetTop = $sideBar.offset().top
+        var sideBarMargin = parseInt($sideBar.children(0).css('margin-top'), 10)
+        var navOuterHeight = 0; //$('.bs-docs-nav').height()
+        return (this.top = offsetTop - navOuterHeight - sideBarMargin );
+      }
+      , bottom: function () {
+        //return (this.bottom = $('.bs-footer').outerHeight(true))
+        return 100;
+      }
+    }
+    })
+  }, 100)
+</script>
+
+<script>
+  $('.tab-content div').each(function( index ) {
+    if(index === 0) { $(this).addClass('active'); }
+  });
+
+  $('.code-tabs a').click(function (e) {
+  });
+
+</script>
+
+     
+  </body>
 </html>

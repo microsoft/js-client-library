@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="DeployR - Simple R analytics integration for application developers.">
+    <meta name="keywords" content="R,Simple,DeployR,Java,JavaScript,.NET,Statistics,Big Data">
+    <meta name="author" content="Microsoft Corporation">
+    <meta name="google-site-verification" content="BQWjliQil8coeYFDfd-nee7j5GDJ0p-6lU4abeJiAZU">
+
+    <!--<time itemprop="buildDate" datetime="Thursday, April 21st, 2016, 7:47:06 AM PDT"></time>-->
+
+    <title>
+      DeployR &middot; RInputs
+    </title>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/png" >
+    <link rel="icon" href="../../assets/img/favicon.png" type="image/png">
+
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+
+    <!-- Documentation extras -->
+    <link href="../../assets/css/github.css" rel="stylesheet">
+
+    <!-- Google Webfonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,600" rel="stylesheet" type="text/css">
+
+    <!-- Grove Styles (switch for different color schemes, e.g. "styles-cleanblue.css") -->
+    <link rel="stylesheet" href="../../assets/css/styles-blue.css" id="grove-styles">
+
+    <!-- Site Styles -->
+    <link href="../../assets/css/site.css" rel="stylesheet">
+    <style type="text/css">
+     .bs-footer{border: none;}
+     .widewrapper.footer { background-color: #ffffff; border: none; }
+    </style>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>  
+  </head>
+  <body data-spy="scroll" data-target="#sidenav">
+    <a class="sr-only" href="#content">Skip to main content</a>
+
+    <!-- master nav -->
+    <header>
+   <nav class="navbar navbar-default grove-navbar" role="navigation">
+      <div class="container">
+         <div class="navbar-header">
+            <a href="#" class="grove-toggle" data-toggle="collapse" data-target=".grove-nav">   
+            <i class="glyphicons show_lines"></i>  
+            </a>
+            <a href="/" class="navbar-brand">
+            <img src="../../assets/img/rLogo.png" alt="DeployR"> DeployR
+            </a>
+         </div>
+         <div class="collapse navbar-collapse grove-nav">
+            <ul class="nav navbar-nav">               
+            </ul>
+         </div>
+         <!-- /.navbar-collapse -->
+      </div>
+   </nav>
+</header>
+
+
+    <!-- page title -->
+    <div class="widewrapper pagetitle strong-highlight">
+   <div class="container">
+      <h1>R Inputs <small>Overview</small></h1>
+      <span class="product-version">
+         Version 8.0.5
+         
+      </span>
+   </div>
+</div>
+  
+    <div class="widewrapper sf-wrapper">
+      <div class="container content" role="main">
+        <div>
+          
+<div class="row"><div class="col-md-3" id="sidenav"><div class="bs-sidebar hidden-print hidden-xs hidden-sm" role="complementary"><ul class="nav bs-sidenav"><li class="active"><a href="#list">Encoding types</a><ul class="nav"></ul></li><li><a href="#rinput">Helpers</a><ul class="nav"></ul></li></ul></div></div><div class="col-md-9" role="main"><div class="container-fluid content doc-content"><h1 id="list">Encoding types</h1>
+
+<p>DeployR-specific encodings are used to encode R object data for use on the API.
+Encoded object data can be sent to the server as parameter values on the 
+following calls:</p>
+<ul>
+<li><a href="https://microsoft.github.io/deployr-api-docs/#r-project-workspace-push">/r/project/workspace/push</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs/#r-project-execute-script">/r/project/execute/script</a></li>
+<li><a href="https://microsoft.github.io/deployr-api-docs/#r-repository-script-execute">/r/repository/script/execute</a></li>
+</ul>
+<p>The complete list of supported DeployR-encoding types is shown here. These 
+encodings can encode a wide range of different classes of R objects:</p>
+<table>
+<thead>
+<tr>
+<th>deployr.RInput</th>
+<th>JavaScript</th>
+<th>R Object</th>
+<th>R Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.logical()</td>
+<td>Boolean</td>
+<td>primitive</td>
+<td>logical</td>
+</tr>
+<tr>
+<td>.numeric()</td>
+<td>Number</td>
+<td>primitive</td>
+<td>integer</td>
+</tr>
+<tr>
+<td>.integer()</td>
+<td>Number</td>
+<td>primative</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>.character()</td>
+<td>String</td>
+<td>primitive</td>
+<td>character</td>
+</tr>
+<tr>
+<td>.date()</td>
+<td>Date</td>
+<td>date</td>
+<td>Date</td>
+</tr>
+<tr>
+<td>.posix()</td>
+<td>Date</td>
+<td>date</td>
+<td>POSIXct</td>
+</tr>
+<tr>
+<td>.list()</td>
+<td>Array [RInput]</td>
+<td>list</td>
+<td>list</td>
+</tr>
+<tr>
+<td>.dataframe()</td>
+<td>Array [RInput]</td>
+<td>dataframe</td>
+<td>data.frame</td>
+</tr>
+<tr>
+<td>.factor()</td>
+<td>Number</td>
+<td>factor</td>
+<td>ordered</td>
+</tr>
+<tr>
+<td>.ordered()</td>
+<td>Number</td>
+<td>factor</td>
+<td>ordered factor</td>
+</tr>
+<tr>
+<td>.logicalVector()</td>
+<td>Array [Boolean]</td>
+<td>primative(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.numericVector()</td>
+<td>Array [Number]</td>
+<td>primitive(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.integerVector()</td>
+<td>Array [Number]</td>
+<td>primitive(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.characterVector()</td>
+<td>Array [String]</td>
+<td>primative(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.dateVector()</td>
+<td>Array [Date]</td>
+<td>date(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.posixVector()</td>
+<td>Array [Date]</td>
+<td>date(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.numericMatrix</td>
+<td>Array [[Numeric]]</td>
+<td>primative(s)</td>
+<td>matrix</td>
+</tr>
+<tr>
+<td>.integerMatrix()</td>
+<td>Array [[Numeric]]</td>
+<td>primative(s)</td>
+<td>matrix</td>
+</tr>
+<tr>
+<td>.logicalMatrix()</td>
+<td>Array [[Boolean]]</td>
+<td>primative(s)</td>
+<td>matrix</td>
+</tr>
+<tr>
+<td>.characterMatrix()</td>
+<td>Array [[String]]</td>
+<td>primative(s)</td>
+<td>matrix</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>To pass values from JavaScript as input to an R script you use one of the defined
+R data type methods above in the first column. Each DeployR-specific encoded 
+object can be defined by the following required properties:</p>
+<ul>
+<li>name - first argument defining the name of the encoded object</li>
+<li>value - second argument defining the data encapsulated by the encoded object</li>
+</ul>
+<p>For example <code>.character(name, value)</code> </p>
+<p>Following this syntax <code>.character(name, value)</code> we produce the<em>character</em> input 
+&#39;Hello&#39; to be sent to the R script:</p>
+<pre><code>deployr.io(&#39;/r/repository/script/execute&#39;)   
+   .data({ filename: &#39;script.R&#39;, author: &#39;testuser&#39; })
+   .character(&#39;name_character&#39;, &#39;Hello&#39;)
+   .end(function(res) {
+      // handle successful response
+   })</code></pre>
+<p>The exception is <a href="../../api/#factor">.factor()</a> and 
+<a href="../../api/#ordered">.ordered()</a> which takes an additional set of properties:</p>
+<ul>
+<li>levels - third argument defines the input levels in the factor</li>
+<li>labels - fourth argument defines the output labels in the factor</li>
+</ul>
+<p>Following this syntax for <code>.factor(name, value, levels, labels)</code> and 
+<code>.ordered(name, value, levels, labels)</code> we produce both an <em>ordered</em> and 
+<em>unordered</em> factor as input to an R script:</p>
+<pre><code>deployr.io(&#39;/r/repository/script/execute&#39;)   
+   .data({ filename: &#39;script.R&#39;, author: &#39;testuser&#39; })
+   .ordered(&#39;name_ofactor&#39;, [1, 2, 3], [1, 3, 3], [&#39;a&#39;, &#39;b&#39; , &#39;c&#39;])  
+   .factor(&#39;name_unofactor&#39;, [1, 2, 3], [2, 3, 3], [&#39;a&#39;, &#39;b&#39; , &#39;c&#39;])
+   .end(function(res) {
+      // handle successful response
+   });</code></pre>
+<p>The R script <em>script.R</em> has reviced the input decoded into their proper types:</p>
+<pre><code>###############################################################################
+# File: script.R
+#
+# Accepts as input:
+#
+# - `name_character`  (character)
+# - `name_ofactor`    (ordered factor)
+# - `name_unodfactor` (unordered factor)
+###############################################################################
+
+print(name_character)
+
+print(name_ofactor)
+
+print(name_unofactor)</code></pre>
+<h1 id="rinput">Helpers</h1>
+
+<p>At times it might not be convenient to use the R data type <a href="#list">methods</a>
+inlined like this so we provide both the <a href="../../api/#rinput">.rinput()</a> and 
+<a href="../../api/#rinputs">.rinputs()</a> methods:</p>
+<table>
+<thead>
+<tr>
+<th>deployr.RInput</th>
+<th>JavaScript</th>
+<th>R Object</th>
+<th>R Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.rinput()</td>
+<td>RInput</td>
+<td>Any</td>
+<td>Any</td>
+</tr>
+<tr>
+<td>.rinputs()</td>
+<td>Array [RInput]</td>
+<td>Any</td>
+<td>Any</td>
+</tr>
+</tbody>
+</table>
+<p>These allow you to construct R inputs ahead of time using the <code>deployr.RInput</code> 
+factory and pass them in an inputs:</p>
+<p>For example, using the <code>.rinputs()</code> method to specify multiple R inputs at 
+once:</p>
+<pre><code class="language-js"><span class="keyword">var</span> RIn     = deployr.RInput; <span class="comment">// alias</span>
+<span class="keyword">var</span> rinputs = []; 
+
+<span class="comment">// -- populate the Array with ` deployr.RInput` --</span>
+rinputs.push(RIn.character(<span class="string">'name_character'</span>, <span class="string">'Hello'</span>);
+rinputs.push(RIn.ordered(<span class="string">'name_ofactor'</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>], [<span class="string">'a'</span>, <span class="string">'b'</span> , <span class="string">'c'</span>]));
+rinputs.push(RIn.factor(<span class="string">'name_unofactor'</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>], [<span class="string">'a'</span>, <span class="string">'b'</span> , <span class="string">'c'</span>]));
+
+deployr.io(<span class="string">'/r/repository/script/execute'</span>)   
+   .data({ filename: <span class="string">'script.R'</span>, author: <span class="string">'testuser'</span> })
+   .rinputs(rinputs)   
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response</span>
+   });</code></pre>
+<p>Or a single R input at a time using the <code>.rinput()</code> method:</p>
+<pre><code class="language-js"><span class="keyword">var</span> RIn           = deployr.RInput; <span class="comment">// alias</span>
+<span class="keyword">var</span> nameCharacter = RIn.character(<span class="string">'name_character'</span>, <span class="string">'Hello'</span>);
+<span class="keyword">var</span> nameOFactor   = RIn.ordered(<span class="string">'name_ofactor'</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>], [<span class="string">'a'</span>, <span class="string">'b'</span> , <span class="string">'c'</span>]);
+<span class="keyword">var</span> nameUnOFactor = RIn.factor(<span class="string">'name_unofactor'</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>], [<span class="string">'a'</span>, <span class="string">'b'</span> , <span class="string">'c'</span>]);
+
+deployr.io(<span class="string">'/r/repository/script/execute'</span>)   
+   .data({ filename: <span class="string">'map.R'</span>, author: <span class="string">'testuser'</span> })
+   .rinput(nameCharacter)
+   .rinput(nameOFactor)   
+   .rinput(nameUnOFactor)   
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response</span>
+   });</code></pre>
+<p><strong>Note</strong> both examples are equivalent to one another.</p>
+</div></div></div>
+        </div>    
+      </div>
+      <div class="push"></div>
+    </div>
+
+    <!-- Footer
+    ================================================== -->
+
+    <footer class="AAAwidewrapper footer bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="row footer">
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">
+      </div>    
+    </div>
+  </div>          
+</footer> 
+
+    
+    <!-- JS and analytics only. -->
+    <!-- Bootstrap core JavaScript
+================================================== -->
+<script src="../../assets/js/bootstrap.min.js"></script>
+<script src="../../assets/js/modernizr.js"></script>
+<script src="../../assets/js/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+  // back to top
+  setTimeout(function () {
+     var $sideBar = $('.bs-sidebar');
+     if (!$sideBar) { return; }
+     $sideBar.affix({
+     offset: {
+     top: function () {
+        var offsetTop = $sideBar.offset().top
+        var sideBarMargin = parseInt($sideBar.children(0).css('margin-top'), 10)
+        var navOuterHeight = $('.bs-docs-nav').height()
+        return (this.top = offsetTop - navOuterHeight - sideBarMargin)
+      }
+      , bottom: function () {
+        return (this.bottom = $('.bs-footer').outerHeight(true))
+      }
+    }
+    })
+  }, 100)
+</script>
+
+<script>
+  $('.tab-content div').each(function( index ) {
+    if(index === 0) { $(this).addClass('active'); }
+  });
+
+  $('.code-tabs a').click(function (e) {
+  });
+
+</script>
+
+     
+  </body>
+</html>

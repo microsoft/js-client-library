@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="DeployR - Simple R analytics integration for application developers.">
+    <meta name="keywords" content="R,Simple,DeployR,Java,JavaScript,.NET,Statistics,Big Data">
+    <meta name="author" content="Microsoft Corporation">
+    <meta name="google-site-verification" content="BQWjliQil8coeYFDfd-nee7j5GDJ0p-6lU4abeJiAZU">
+
+    <!--<time itemprop="buildDate" datetime="Thursday, April 21st, 2016, 7:47:06 AM PDT"></time>-->
+
+    <title>
+      DeployR &middot; Error Handling
+    </title>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/png" >
+    <link rel="icon" href="../../assets/img/favicon.png" type="image/png">
+
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+
+    <!-- Documentation extras -->
+    <link href="../../assets/css/github.css" rel="stylesheet">
+
+    <!-- Google Webfonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,600" rel="stylesheet" type="text/css">
+
+    <!-- Grove Styles (switch for different color schemes, e.g. "styles-cleanblue.css") -->
+    <link rel="stylesheet" href="../../assets/css/styles-blue.css" id="grove-styles">
+
+    <!-- Site Styles -->
+    <link href="../../assets/css/site.css" rel="stylesheet">
+    <style type="text/css">
+     .bs-footer{border: none;}
+     .widewrapper.footer { background-color: #ffffff; border: none; }
+    </style>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>  
+  </head>
+  <body data-spy="scroll" data-target="#sidenav">
+    <a class="sr-only" href="#content">Skip to main content</a>
+
+    <!-- master nav -->
+    <header>
+   <nav class="navbar navbar-default grove-navbar" role="navigation">
+      <div class="container">
+         <div class="navbar-header">
+            <a href="#" class="grove-toggle" data-toggle="collapse" data-target=".grove-nav">   
+            <i class="glyphicons show_lines"></i>  
+            </a>
+            <a href="/" class="navbar-brand">
+            <img src="../../assets/img/rLogo.png" alt="DeployR"> DeployR
+            </a>
+         </div>
+         <div class="collapse navbar-collapse grove-nav">
+            <ul class="nav navbar-nav">
+               <li class="dropdown">
+                  <a href="#" data-toggle="dropdown">Data Scientists <b class="caret"></b></a>            
+                  <ul class="dropdown-menu">
+                     <li><a href="/documents/getting-started/data-scientist">Getting Started</a></li>
+                     <li><a href="/documents/dev/scientist-portable-code">Portable R Code Guide</a></li>
+                     <li><a href="/documents/help/repo-man">Repository Manager Help</a></li>
+                     <li><a href="/documents/getting-started/data-scientist#resources">More...</a></li>
+                  </ul>
+               </li>
+               <li class="dropdown">
+                  <a href="#" data-toggle="dropdown">Application Developers <b class="caret"></b></a>            
+                  <ul class="dropdown-menu">
+                     <li><a href="/documents/getting-started/application-developer">Getting Started</a></li>
+                     <li><a href="/documents/dev/rbroker">RBroker Framework Tutorial</a></li>
+                     <li><a href="/documents/dev/clientlib">Client Library Tutorial</a></li>
+                     <li><a href="/documents/dev/api-doc">API Reference Guide</a></li>
+                     <li><a href="/docanddown">Library Downloads</a></li>
+                     <li><a href="/documents/getting-started/application-developer/#resources">More...</a></li>
+                  </ul>
+               </li>
+               <li class="dropdown">
+                  <a href="#" data-toggle="dropdown">Administrators <b class="caret"></b></a>            
+                  <ul class="dropdown-menu">
+                     <li><a href="/documents/getting-started/administrator">Getting Started</a></li>
+                     <li><a href="/documents/admin/install">Installation & Configuration</a></li>
+                     <li><a href="/documents/admin/security">Security</a></li>
+                     <li><a href="/documents/admin/r-package-mgmt">R Package Management</a></li>
+                     <li><a href="/documents/help/admin-console">Administration Console Help</a></li>
+                     <li><a href="/documents/admin/troubleshoot">Troubleshooting</a></li>
+                     <li><a href="/documents/getting-started/administrator/#resources">More...</a></li>
+                  </ul>
+               </li>
+               <li class="dropdown">
+                  <a href="#" data-toggle="dropdown">
+                  Community <b class="caret"></b>
+                  </a>            
+                  <ul class="dropdown-menu">
+                     <li><a href="http://go.microsoft.com/fwlink/?LinkID=708535" target="_blank">Forum / Discussion Group</a></li>
+                     <li><a href="/faq">FAQs</a></li>
+                  </ul>
+               </li>
+              <li class="dropdown">
+                  <a href="#" data-toggle="dropdown">Download<b class="caret"></b></a>            
+                  <ul class="dropdown-menu pull-right">   
+                    <li><a href="/download">Download DeployR</a></li>
+                    <li><a href="/documents/admin/install">Install DeployR</a></li>
+                    <li><a href="/releases/">Release History</a></li>
+                  </ul>
+            </ul>
+         </div>
+         <!-- /.navbar-collapse -->
+      </div>
+   </nav>
+</header>
+
+
+    <!-- page title -->
+    <div class="widewrapper pagetitle strong-highlight">
+   <div class="container">
+      <h1>Error Handling <small>Overview</small></h1>
+      <span class="product-version">
+         Version 8.0.5
+         
+      </span>
+   </div>
+</div>
+  
+    <div class="widewrapper sf-wrapper">
+      <div class="container content" role="main">
+        <div>
+          
+<div class="row"><div class="col-md-3" id="sidenav"><div class="bs-sidebar hidden-print hidden-xs hidden-sm" role="complementary"><ul class="nav bs-sidenav"><li class="active"><a href="#response">Response Object</a><ul class="nav"></ul></li><li><a href="#codes">Error Codes</a><ul class="nav"></ul></li></ul></div></div><div class="col-md-9" role="main"><div class="container-fluid content doc-content"><h1 id="response">Response Object</h1>
+
+<p>DeployR returns a well formated JSON error when something goes wrong. All errors 
+have four properties:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>success</td>
+<td>false - logical indicating a failure occured for this API call</td>
+</tr>
+<tr>
+<td>call</td>
+<td>The DeployR API call that failed</td>
+</tr>
+<tr>
+<td>errorCode</td>
+<td>The HTTP status code for the error [or] DeployR status code</td>
+</tr>
+<tr>
+<td>error</td>
+<td>A more descriptive message regarding the exception</td>
+</tr>
+</tbody>
+</table>
+<p>Example <strong>400</strong> error:</p>
+<pre><code>{ 
+   deployr: {
+      response: {
+         success: false,
+         call: &quot;/r/project/execute/script&quot;,  
+         errorCode: 400,           
+         error: &quot;Bad Request: invalid data on call&quot;
+      }
+   }
+}</code></pre>
+<p>A full list of supported Error Codes can be found <a href="./#codes">here</a>.</p>
+<h1 id="codes">Error Codes</h1>
+
+<p>The DeployR API returns the appropriate error codes for every request. </p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Text</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>400</td>
+<td>Bad Request: invalid data on call</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized Access: caller has insufficient privileges</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden Access: caller is unauthorized</td>
+</tr>
+<tr>
+<td>404</td>
+<td>The requested resource was not found</td>
+</tr>
+<tr>
+<td>405</td>
+<td>HTTP Method Disallowed: disallowed HTTP method on call</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Conflict: project is currently busy on call, concurrent call rejected</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Temporarily Unavailable: HTTP session temporarily invalidated</td>
+</tr>
+<tr>
+<td>900</td>
+<td>General Server Error: runtime error</td>
+</tr>
+<tr>
+<td>910</td>
+<td>Grid Resource Error: max. concurrent live projects exceeded for authenticated user</td>
+</tr>
+<tr>
+<td>911</td>
+<td>Grid Resource Error: max. concurrent live projects exceeded for anonymous user</td>
+</tr>
+<tr>
+<td>912</td>
+<td>Grid Resource Error: maximum number of concurrent live jobs exceeded for authenticated user</td>
+</tr>
+<tr>
+<td>913</td>
+<td>Grid Resource Error: grid resources temporarily exhausted</td>
+</tr>
+<tr>
+<td>914</td>
+<td>Grid Resource Error: grid runtime boundary limit exceeded</td>
+</tr>
+<tr>
+<td>915</td>
+<td>Grid Resource Error: grid node unresponsive</td>
+</tr>
+<tr>
+<td>916</td>
+<td>Grid Resource Error: grid node R session unresponsive</td>
+</tr>
+<tr>
+<td>917</td>
+<td>Grid Resource Error: grid node version incompatible with server</td>
+</tr>
+<tr>
+<td>940</td>
+<td>Authentication Error: username/password credentials provided are invalid</td>
+</tr>
+<tr>
+<td>941</td>
+<td>Authentication Error: user has insufficient privileges to login on the API</td>
+</tr>
+<tr>
+<td>942</td>
+<td>Authentication Error: another user has already authentciated on the current HTTP session</td>
+</tr>
+<tr>
+<td>943</td>
+<td>Authentication Error: user account has been disabled by the system administrator</td>
+</tr>
+<tr>
+<td>944</td>
+<td>Authentication Error: user account has been temporarily locked by the system administrator</td>
+</tr>
+<tr>
+<td>945</td>
+<td>Authentication Error: user account password has expired, requires reset</td>
+</tr>
+</tbody>
+</table>
+</div></div></div>
+        </div>    
+      </div>
+      <div class="push"></div>
+    </div>
+
+    <!-- Footer
+    ================================================== -->
+
+    <footer class="footer bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="row footer">
+      <div class="col-sm-3">        
+      </div>
+      <div class="col-sm-3">        
+      </div>
+      <div class="col-sm-3">        
+      </div>
+      <div class="col-sm-3">        
+      </div>    
+    </div>
+  </div>          
+</footer> 
+
+    
+    <!-- JS and analytics only. -->
+    <!-- Bootstrap core JavaScript
+================================================== -->
+<script src="../../assets/js/bootstrap.min.js"></script>
+<script src="../../assets/js/modernizr.js"></script>
+<script src="../../assets/js/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- TOC
+================================================= -->
+<script>
+  // back to top
+  setTimeout(function () {
+     var $sideBar = $('.bs-sidebar');
+     if (!$sideBar) { return; }
+     $sideBar.affix({
+     offset: {
+     top: function () {
+        var offsetTop = $sideBar.offset().top
+        var sideBarMargin = parseInt($sideBar.children(0).css('margin-top'), 10)
+        var navOuterHeight = $('.bs-docs-nav').height()
+        return (this.top = offsetTop - navOuterHeight - sideBarMargin)
+      }
+      , bottom: function () {
+        return (this.bottom = $('.bs-footer').outerHeight(true))
+      }
+    }
+    })
+  }, 100)
+</script>
+
+<script>
+  $('.tab-content div').each(function( index ) {
+    if(index === 0) { $(this).addClass('active'); }
+  });
+
+  $('.code-tabs a').click(function (e) {
+  });
+
+</script>
+
+     
+  </body>
+</html>

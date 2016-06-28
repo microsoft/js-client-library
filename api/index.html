@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <!-- Meta, title, CSS, favicons, etc. -->
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="DeployR - Simple R analytics integration for application developers.">
+    <meta name="keywords" content="R,Simple,DeployR,Java,JavaScript,.NET,Statistics,Big Data">
+    <meta name="author" content="Microsoft Corporation">
+    <meta name="google-site-verification" content="BQWjliQil8coeYFDfd-nee7j5GDJ0p-6lU4abeJiAZU">
+
+    <!--<time itemprop="buildDate" datetime="Thursday, April 21st, 2016, 7:47:06 AM PDT"></time>-->
+
+    <title>
+      DeployR &middot; JavaScript API
+    </title>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/png" >
+    <link rel="icon" href="../assets/img/favicon.png" type="image/png">
+
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+    <!-- Documentation extras -->
+    <link href="../assets/css/github.css" rel="stylesheet">
+
+    <!-- Google Webfonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,600" rel="stylesheet" type="text/css">
+
+    <!-- Grove Styles (switch for different color schemes, e.g. "styles-cleanblue.css") -->
+    <link rel="stylesheet" href="../assets/css/styles-blue.css" id="grove-styles">
+
+    <!-- Site Styles -->
+    <link href="../assets/css/site.css" rel="stylesheet">
+    <style type="text/css">
+     .bs-footer{border: none;}
+     .widewrapper.footer { background-color: #ffffff; border: none; }
+    </style>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>         
+  </head>
+  <body data-spy="scroll" data-target="#sidenav">
+    <a class="sr-only" href="#content">Skip to main content</a>
+
+    <!-- master nav -->
+    <header>
+   <nav class="navbar navbar-default grove-navbar" role="navigation">
+      <div class="container">
+         <div class="navbar-header">
+            <a href="#" class="grove-toggle" data-toggle="collapse" data-target=".grove-nav">   
+            <i class="glyphicons show_lines"></i>  
+            </a>
+            <a href="#" class="navbar-brand">
+            <img src="../assets/img/rLogo.png" alt="DeployR"> DeployR
+            </a>
+         </div>
+         <div class="collapse navbar-collapse grove-nav">
+            <ul class="nav navbar-nav">              
+            </ul>
+         </div>
+         <!-- /.navbar-collapse -->
+      </div>
+   </nav>
+</header>
+
+
+    <!-- page title -->
+    <div class="widewrapper pagetitle strong-highlight">
+   <div class="container">
+      <h1>JavaScript API <small></small></h1>
+      <span class="product-version">
+         Version 8.0.5
+         
+      </span>
+   </div>
+</div>
+  
+    <div class="widewrapper sf-wrapper">
+      <div class="container content" role="main">
+        <div>
+          
+<div class="row"><div class="col-md-3" id="sidenav"><div class="bs-sidebar hidden-print hidden-xs hidden-sm" role="complementary"><ul class="nav bs-sidenav"><li class="active"><a href="#introduction">Introducing the API</a><ul class="nav"></ul></li><li><a href="#global">Global Object `deployr`</a><ul class="nav"><li><a class="toc-section-0" href="#_auth">auth</a></li><li><a class="toc-section-0" href="#configure">configure</a></li><li><a class="toc-section-0" href="#_io">io</a></li><li><a class="toc-section-0" href="#pipeline">pipeline</a></li><li><a class="toc-section-0" href="#_rinput">RInput</a></li><li><a class="toc-section-0" href="#_script">script</a></li></ul></li><li><a href="#request">Request</a><ul class="nav"><li><a class="toc-section-0" href="#abort">abort</a></li><li><a class="toc-section-0" href="#attach">attach</a></li><li><a class="toc-section-0" href="#data">data</a></li><li><a class="toc-section-0" href="#destroy">destroy</a></li><li><a class="toc-section-0" href="#end">end</a></li><li><a class="toc-section-0" href="#always">ensure</a></li><li><a class="toc-section-0" href="#error">error</a></li><li><a class="toc-section-0" href="#io">io</a></li><li><a class="toc-section-0" href="#log">log</a></li><li><a class="toc-section-0" href="#on">on</a></li><li><a class="toc-section-0" href="#pipe">pipe</a></li><li><a class="toc-section-0" href="#release">release</a></li><li><a class="toc-section-0" href="#rinput">rinput</a></li><li><a class="toc-section-0" href="#rinputs">rinputs</a></li><li><a class="toc-section-0" href="#routput">routput</a></li><li><a class="toc-section-0" href="#routputs">rouputs</a></li><li><a class="toc-section-0" href="#script">script</a></li><li><a class="toc-section-0" href="#stream">stream</a></li><li><a class="toc-section-0" href="#timeout">timeout</a></li></ul></li><li><a href="#datatypes">R Data Types</a><ul class="nav"><li><a class="toc-section-0" href="#character">character</a></li><li><a class="toc-section-0" href="#charactermatrix">characterMatrix</a></li><li><a class="toc-section-0" href="#charactervector">characterVector</a></li><li><a class="toc-section-0" href="#dataframe">dataframe</a></li><li><a class="toc-section-0" href="#date">date</a></li><li><a class="toc-section-0" href="#datevector">dateVector</a></li><li><a class="toc-section-0" href="#factor">factor</a></li><li><a class="toc-section-0" href="#integer">integer</a></li><li><a class="toc-section-0" href="#integermatrix">integerMatrix</a></li><li><a class="toc-section-0" href="#integervector">integerVector</a></li><li><a class="toc-section-0" href="#list">list</a></li><li><a class="toc-section-0" href="#logical">logical</a></li><li><a class="toc-section-0" href="#logicalmatrix">logicalMatrix</a></li><li><a class="toc-section-0" href="#logicalvector">logicalVector</a></li><li><a class="toc-section-0" href="#numeric">numeric</a></li><li><a class="toc-section-0" href="#numericmatrix">numericVector</a></li><li><a class="toc-section-0" href="#numericvector">numericVector</a></li><li><a class="toc-section-0" href="#ordered">ordered</a></li><li><a class="toc-section-0" href="#posix">posix</a></li><li><a class="toc-section-0" href="#posixvector">posixVector</a></li></ul></li></ul></div></div><div class="col-md-9" role="main"><div class="container-fluid content doc-content"><h1 id="introduction" style="padding:0"></h1>
+
+<h1 id="introduction">Introducing the API</h1>
+
+<p>The JavaScript client library is a light-weight <em>fluent</em> API used to communcate 
+with DeployR from both the browser and Node.js environments. It is crafted for 
+flexibility, readability, and a low learning curve. </p>
+<p>For additional information review the <a href="../">User guide</a>. It provides an 
+introduction and comprehensive overview for the main areas of the API. It also
+introduces features and walks you through what you&#39;ll need to know in order to 
+obtain the most out of the DeployR JavaScript client library.</p>
+<hr>
+<h1 id="global" style="padding:0"></h1>
+
+<h1>Global Object <code>deployr</code></h1>
+
+<div class="well"><p>The <code>deployr</code> global namespace object. This is the public interface for all 
+DeployR Request instances. All things start here.</p>
+</div>
+
+
+<h2 id="_auth" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">auth</strong> (username, password) <span class="label label-success">static</span></p>
+<p>Convenience function to sign the user in by authenticating the credentials with 
+the DeployR server.</p>
+<p>Example:</p>
+<pre><code>deployr.auth(&#39;testuser&#39;, &#39;secret&#39;);</code></pre>
+<p>This call is equivalent to:</p>
+<pre><code>deployr.io(&#39;/r/user/login&#39;)
+  .data({ username: &#39;testuser&#39;, password: &#39;secret&#39; })
+  .end();</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>username</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> Specifies the username</p>
+</li>
+<li><p><strong>password</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> Specifies the password</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>A new  <code>/r/user/login</code> request transaction.</p>
+<hr>
+<h2 id="configure" style="padding:0"></h2>
+
+<hr>
+<p><strong style="color:#7694a7">configure</strong> (config) <span class="label label-info">chainable</span> <span class="label label-success">static</span></p>
+<p>Represents a static method for configuring all DeployR requests. Settings made 
+here are applied globally across every request.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>[config]</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="api-type" target="_blank">Object</a> The object literal configuration hash. The 
+complete list of supported configuration properties accepted:</p>
+<ul>
+<li><p><strong>host</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The location of the DeployR server including 
+the port. This is required for <em>Node.js</em> environments and is (optional) for
+the <em>Browser</em> which will fallback to the domain that served up the page. 
+Example: <code>{ host: &#39;http://dhost:8000&#39; }</code>. </p>
+</li>
+<li><p><strong>cors</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="api-type" target="_blank">Boolean</a> <span class="label label-default">optional</span> If <code>true</code> 
+Cross-origin resource sharing (CORS) <em>withCredentials</em> will be enabled. See 
+the <a href="../#cors">CORS</a> section for instruction on how to enable for the DeployR 
+server.</p>
+</li>
+<li><p><strong>logging</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="api-type" target="_blank">Boolean</a> <span class="label label-default">optional</span> Turn
+logging on or off. <code>true</code> for on, <code>false</code> for off.</p>
+</li>
+<li><p><strong>[events]</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="api-type" target="_blank">Object</a> <span class="label label-default">optional</span> The object 
+literal hash defining global events from request lifecycle moments to specific 
+errors. See the <a href="#events">events</a> section for a complete list of supported 
+events.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre><code class="language-js">deployr.configure( {
+   host: <span class="string">'http://dhost:8000'</span>,
+   cors: <span class="literal">true</span>,
+   logging: <span class="literal">true</span>,
+   events: {
+      error: <span class="function"><span class="keyword">function</span><span class="params">(code, res, api)</span> {</span>
+         <span class="comment">// Generic errors</span>
+      }, 
+
+      <span class="number">409</span>: <span class="function"><span class="keyword">function</span><span class="params">(res, api)</span> {</span>
+         <span class="comment">// 409 errors</span>
+      }
+   }
+});</code></pre>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#global" class="api-type">this</a></p>
+<p>The refrence to <code>deployr</code> on which the method is being called. </p>
+<hr>
+<h2 id="_io" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">io</strong> (api) <span class="label label-success">static</span></p>
+<p>Factory for creating new IO requests to DeployR.</p>
+<p>Example:</p>
+<pre><code>var request = deployr.io(&#39;/r/user/about&#39;);</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>api</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> One of the supported DeployR APIs:</p>
+<ul>
+<li><a href="https://microsoft.github.io/deployr-api-docs#users">User APIs</a></li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#projects">Project APIs</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#jobs">Job APIs</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#repository">Repository APIs</a> </li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>A new <a href="#request" class="api-type">DeployR</a> request transaction.</p>
+<hr>
+<h2 id="pipeline" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">pipeline</strong> (tasks) <span class="label label-success">static</span></p>
+<p>Run an series of chained <a href="#request" class="api-type">DeployR</a> requests in sequence 
+and without overlap.</p>
+<p>Example:</p>
+<pre><code>function firstTask() {
+    return deployr.io(&#39;/r/user/login&#39;)
+             .delay()
+             .data({ username: &#39;testuser&#39;, password: &#39;secret&#39; })    
+             .end()             
+             .io(&#39;/r/project/create&#39;)
+             .end();
+}
+
+function secondTask() {
+    return deployr.io(&#39;/r/user/about&#39;)
+             .delay()
+             .end()
+             .io(&#39;/r/user/logout&#39;)
+             .end();
+}
+
+deployr.pipeline([ firstTask(), secondTask() ]);</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>tasks</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> Specifies the list of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="api-type" target="_blank">Function</a> tasks.</li>
+</ul>
+<p><strong>Returns:</strong> <a href="http://promisesaplus.com/" class="api-type" target="_blank">Promise</a></p>
+<p>A promise wrapping the resolution of either &quot;resolve&quot; or &quot;reject&quot; callback.</p>
+<hr>
+<h2 id="_rinput" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">RInput</strong> 
+<small class="text-muted">- property</small> <span class="label label-success">static</span></p>
+<p>Defines the factory for creating a DeployR-specific 
+<a href="#datatypes">encoded R object</a> to be sent as input parameters to an R script.</p>
+<p>Example:</p>
+<pre><code>var rinput = deployr.RInput.logical(&#39;logical_name&#39;, true);
+
+var rinput = deployr.RInput.numeric(&#39;numeric_name&#39;, 10.5);
+
+var rinput = deployr.RInput.integer(&#39;integer_name&#39;, 5);
+
+var rinput = deployr.RInput.character(&#39;character_name&#39;, &#39;Hello&#39;);
+
+// ect...</code></pre>
+<hr>
+<h2 id="_script" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">script</strong> (...) <span class="label label-success">static</span></p>
+<p>Script execution convenience function for:</p>
+<ul>
+<li><p>/r/repository/script/execute</p>
+<p> From:</p>
+<pre><code> deployr.io(&#39;/r/repository/script/execute&#39;)
+   .data({ filename: &#39;script.R&#39;, author: &#39;testuser&#39;, directory: &#39;root&#39; })
+   .end();</code></pre>
+<p> To:</p>
+<pre><code> deployr.script(&#39;/testuser/root/script.R&#39;).end();</code></pre>
+</li>
+<li><p>/r/project/execute/script</p>
+<p> From:</p>
+<pre><code> var project = &#39;PROJECT-5ac47aff-8f8c-4ac2-8a8f-6e31468e6a19&#39;;
+
+ deployr.io(&#39;/r/project/execute/script&#39;)
+   .data({ 
+    filename: &#39;script.R&#39;, 
+    author: &#39;testuser&#39;, 
+    directory: &#39;root&#39;,
+    project: project
+   })
+   .end();</code></pre>
+<p> To:</p>
+<pre><code> var project = &#39;PROJECT-5ac47aff-8f8c-4ac2-8a8f-6e31468e6a19&#39;;
+
+ deployr.script(&#39;/testuser/root/script.R&#39;, project).end();</code></pre>
+</li>
+</ul>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>...</strong> Arguments to define the fully qualified script for execution. Possible
+signatures: </li>
+</ul>
+<ol>
+<li><p>The fully qualified script: <em>/author/directory/filename</em> and (optional)
+<em>project</em> for executing external scripts on the R session:</p>
+<pre><code>deployr.script(&#39;/testuser/root/script.R&#39;, project).end();</code></pre>
+</li>
+<li><p>The fully qualified script: <em>filename, directory, author</em> and (optional)
+<em>project</em> for executing external scripts on the R session:</p>
+<pre><code>deployr.script(&#39;script.R&#39;, &#39;testuser&#39;, &#39;root&#39;, project).end();</code></pre>
+</li>
+<li><p>The fully qualified script as an object hash:</p>
+<pre><code>deployr.script({ 
+  filename: &#39;script.R&#39;, 
+  author: &#39;testuser&#39;, 
+  directory: &#39;root&#39;, 
+  project: &#39;project&#39; // (optional) for executing external scripts on the R session
+}).end();</code></pre>
+</li>
+</ol>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>A new  <code>/r/repository/script/execute</code> or <code>/r/project/execute/script</code> 
+request transaction.</p>
+<hr>
+<h1 id="request" style="padding:0"></h1>
+
+<h1>Request</h1>
+
+<div class="well"><p>The Request class is a utility that brokers HTTP requests through a simplified 
+<em>fluid</em> interface to DeployR. </p>
+</div>
+
+<hr>
+<h2 id="abort" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">abort</strong> () <span class="label label-info">chainable</span></p>
+<p>Aborts the specific transaction.</p>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="attach" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">attach</strong> (file, filename) <span class="label label-info">chainable</span></p>
+<p>Attaches a <em>file</em> to be uploaded.</p>
+<p>Example:</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>file {File|Blob|path}</strong> The file to be attached for an upload. For 
+<strong>Browser</strong> environments the HTML5 File|Blob is used. For the <strong>Node.js</strong> 
+environment, a file path is accepted.</p>
+</li>
+<li><p><strong>filename</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> <span class="label label-default">optional</span> The name of 
+the file to be uploaded. This name does not have to match the actual source 
+filename. </p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="data" style="padding:0"></h2>
+
+
+<p><strong style="color:#7694a7">data</strong> (params) <span class="label label-info">chainable</span></p>
+<p>Defines the request data being sent to a DeployR API. The supported parameters
+depend on the API being called:</p>
+<ul>
+<li><a href="https://microsoft.github.io/deployr-api-docs#users">User APIs</a></li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#projects">Project APIs</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#jobs">Job APIs</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#repository">Repository APIs</a> </li>
+</ul>
+<p>For example, using the <a href="https://microsoft.github.io/deployr-api-docs/#r-user-login">/r/user/login</a> 
+API we can identify the supported parameters and construct a call as such:</p>
+<pre><code>deployr.io(&#39;/r/user/login&#39;)
+  .data( { username: &#39;testuser&#39;, password: &#39;secret&#39; })
+  .end();</code></pre>
+<p><span class="label label-danger">Important</span> </p>
+<p>The DeployR parameters: <strong>format, inputs, outputs</strong> are reserved paramters. As a 
+result they should never be included as one of the <code>.data()</code> parameters. </p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>params</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="api-type" target="_blank">Object</a> The object literal hash of data to be sent.</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="destroy" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">[object Object]</strong> () <span class="label label-destroy">undefined</span></p>
+<p>Nulls internal references and removes any event listeners. </p>
+<hr>
+<h2 id="end" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">end</strong> (λ) <span class="label label-info">chainable</span></p>
+<p>Indicates that the request is ready to be sent to DeployR. It is <strong>important</strong> 
+to note that if the <code>.end()</code> method is never called the request will not be 
+sent.</p>
+<p>Example:</p>
+<pre><code>deployr.io(&#39;/r/user/about&#39;)
+  .end(function(res, chain) {
+     console.log(res.get(&#39;user&#39;));
+  });</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>λ</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="api-type" target="_blank">Function</a> <span class="label label-default">optional</span> The callback 
+function. Supplies two arguments:</p>
+<ul>
+<li><strong>res</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="api-type" target="_blank">Object</a> The DeployR JSON response.</li>
+<li><strong>chain</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The response chain of all the previous 
+successful responses. This value can be <code>null</code> if there were no previous 
+requests.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="always" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">ensure</strong> (λ) <span class="label label-info">chainable</span></p>
+<p>Acts as a <em>finally</em> statement allowing you to execute &quot;cleanup&quot; type tasks in a 
+request chain. It arranges for cleanup to be called, with no arguments, when the 
+DeployR request chain is either completely fulfilled or rejected. </p>
+<p>Example:</p>
+<pre><code>deployr.io(&#39;/r/user/login&#39;)
+  .data({ username: &#39;testuser&#39; , password: &#39;secret&#39; }) 
+  .end()
+  .ensure(function() {
+    console.log(&#39;cleanup...&#39;); 
+  });</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>λ</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="api-type" target="_blank">Function</a> The callback function. </li>
+</ul>
+<p><strong>Returns:</strong> <a href="http://promisesaplus.com/" class="api-type" target="_blank">Promise</a></p>
+<p>A promise wrapping the resolution of either &quot;resolve&quot; or &quot;reject&quot; callback.</p>
+<hr>
+<h2 id="error" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">error</strong> (λ) <span class="label label-info">chainable</span></p>
+<p>The general failure callback. If called, all DeployR errors for this transaction
+will be returned here when raised.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>λ</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="api-type" target="_blank">Function</a> The error callback function. Supplies one 
+argument:</p>
+<ul>
+<li><strong>err</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="api-type" target="_blank">Object</a> The DeployR JSON error reponse.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="io" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">io</strong> (api) <span class="label label-info">chainable</span></p>
+<p>Add an additional IO request to the exsisting sequential request chain.</p>
+<p>Example:</p>
+<pre><code>deployr.io(&#39;/r/user/about&#39;)
+   .end()
+   .io(&#39;/r/user/logout&#39;)
+   .end();</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>api</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> One of the supported DeployR APIs:</p>
+<ul>
+<li><a href="https://microsoft.github.io/deployr-api-docs#users">User APIs</a></li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#projects">Project APIs</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#jobs">Job APIs</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs#repository">Repository APIs</a> </li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="log" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">log</strong> () <span class="label label-info">chainable</span></p>
+<p>Turn logging on for the specific transaction.</p>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="on" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">on</strong> (event, λ) <span class="label label-info">chainable</span></p>
+<p>Adds a listener for the specified event on this request.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>event</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The event name.</li>
+<li><strong>λ</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="api-type" target="_blank">Function</a>The callback function.</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="pipe" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">pipe</strong> (stream) <span class="label label-info">chainable</span> <span class="label label-warning">Node.js</span></p>
+<p>Stream the DeployR response into the pipe. It is <strong>important</strong> to note that if 
+the <code>.pipe()</code> method is never called the request will not be sent.</p>
+<p>The <code>.pipe()</code> method should be be used as an <strong>alternative</strong> to <code>.end()</code> 
+and never along side of it. <code>.pipe()</code> and <code>.end()</code> are an either-or.</p>
+<p><strong>Note</strong> This is a <span class="label label-info">chainable</span> method for piping streams and
+can not be used as a chain with <code>.io()</code> requests.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>stream:</strong> A destination Stream.</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Stream: The passed in destination <code>stream</code> to be used for additional piping.</p>
+<hr>
+<h2 id="release" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">release</strong> (projects) <span class="label label-success">static</span></p>
+<p>Release any residual <em>project</em> resources associated with the application 
+instance whenever a client application terminates.  This includes closing any
+supplied projects down and logging out.</p>
+<p>Example:</p>
+<pre><code>var ruser = deployr.auth(&#39;testuser&#39;, &#39;secret&#39;);
+
+// ...
+
+var projects = [ &#39;PROJECT-5ac47aff-8f8c&#39;, &#39;PROJECT-1zkl466qii-1z4w&#39; ];
+
+// ...
+
+ruser.release(projects);</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>projects</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a>|<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> <span class="label label-default">optional</span><br>The <em>project</em> or list of <em>projects</em> to close.</li>
+</ul>
+<p><strong>Returns:</strong> <a href="http://promisesaplus.com/" class="api-type" target="_blank">Promise</a></p>
+<p>A promise wrapping the resolution of either &quot;resolve&quot; or &quot;reject&quot; callback.</p>
+<hr>
+<h2 id="rinput" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">rinput</strong> (rinput) <span class="label label-info">chainable</span></p>
+<p>Used to pass a <em>single input</em> from JavaScript to an R script using one of the 
+defined <a href="#_rinput" class="api-type">RInput</a> factories.</p>
+<p>Example:</p>
+<pre><code class="language-js"><span class="keyword">var</span> RIn    = deployr.RInput; <span class="comment">// alias</span>
+<span class="keyword">var</span> rinput = RIn.character(<span class="string">'reduce'</span>, <span class="string">'left'</span>);
+
+deployr.io(<span class="string">'/r/repository/script/execute'</span>)   
+   .data({ filename: <span class="string">'accumulate.R'</span>, author: <span class="string">'testuser'</span> })
+   .rinput(rinput)
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response</span>
+   });</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>rinput</strong> <a href="#_rinput" class="api-type">RInput</a> The DeployR-specific encoded R 
+object data for use on an API call.</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="rinputs" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">rinputs</strong> (rinputs) <span class="label label-info">chainable</span></p>
+<p>Used to pass <em>multiple inputs</em> at once from JavaScript to an R script using 
+one of the defined <a href="#_rinput" class="api-type">RInput</a> factories.</p>
+<p>Example:</p>
+<pre><code class="language-js"><span class="keyword">var</span> RIn     = deployr.RInput; <span class="comment">// alias</span>
+<span class="keyword">var</span> rinputs = [];
+
+rinputs.push( RIn.character(<span class="string">'reduce'</span>, <span class="string">'left'</span>) );
+rinputs.push( RIn.character(<span class="string">'fold'</span>, <span class="string">'left'</span>) );
+rinputs.push( RIn.character(<span class="string">'scan'</span>, <span class="string">'left'</span>) );
+
+deployr.io(<span class="string">'/r/repository/script/execute'</span>)   
+   .data({ filename: <span class="string">'accumulate.R'</span>, author: <span class="string">'testuser'</span> })
+   .rinputs(rinputs)
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      <span class="comment">// handle successful response</span>
+   });</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>rinputs</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The <a href="#_rinput" class="api-type">RInput</a> list of
+DeployR-specific encoded R object data for use on an API call.</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="routput" style="padding:0"></h2>
+
+
+<p><strong style="color:#7694a7">routput</strong> (robject) <span class="label label-info">chainable</span></p>
+<p>Defines the name of the R object that will be returned as a DeployR-encoded R 
+object on the response markup.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>robject</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the R object that will be 
+returned. </li>
+</ul>
+<p>JavaScript:</p>
+<pre><code class="language-js"> deployr.script(<span class="string">'/testuser/root/script.R'</span>)
+   .routput(<span class="string">'max'</span>)
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      console.log(res.workspace(<span class="string">'max'</span>).value); <span class="comment">// prints 500</span>
+   });</code></pre>
+<p>R:</p>
+<pre><code>#######################
+# File: script.R
+#######################
+
+max&lt;-500</code></pre>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="routputs" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">routputs</strong> (robjects) <span class="label label-info">chainable</span></p>
+<p>A convenience alternative to multiple <code>.rinput()</code> calls. Defines a name list 
+of R objects that will be returned as DeployR-encoded R objects on the response 
+markup.</p>
+<p>Calling this method <code>.routputs([ ... ])</code> is equivalent to invoking multiple
+<code>.routput(...)</code> calls.</p>
+<p>JavaScript:</p>
+<pre><code class="language-js"> deployr.script(<span class="string">'/testuser/root/script.R'</span>)
+   .routputs([ <span class="string">'min'</span>, <span class="string">'max'</span>, <span class="string">'mean'</span> ])
+   .end(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> {</span>
+      console.log(res.workspace(<span class="string">'min'</span>).value);  <span class="comment">// prints 400</span>
+      console.log(res.workspace(<span class="string">'max'</span>).value);  <span class="comment">// prints 500</span>
+      console.log(res.workspace(<span class="string">'mean'</span>).value); <span class="comment">// prints 600</span>
+   });</code></pre>
+<p>R:</p>
+<pre><code>#######################
+# File: script.R
+#######################
+
+min&lt;-400
+max&lt;-500
+mean&lt;-600</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>robject</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> A name list of R objects that will be 
+returned. </li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="script" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">script</strong> (...) <span class="label label-info">chainable</span></p>
+<p>Convenience function for adding an additional script execution to the exsisting 
+sequential request chain.</p>
+<p>See <a href="#_script" class="api-type">deployr.script(...)</a></p>
+<p>Example:</p>
+<pre><code> deployr.script(&#39;/testuser/root/left.R&#39;)
+   .end()
+   .script(&#39;/testuser/root/right.R&#39;)
+   .end()
+   .script(&#39;/testuser/root/scan.R&#39;)
+   .end();</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>...</strong> Arguments to define the fully qualified script for execution. See 
+<a href="#_script" class="api-type">deployr.script</a></li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="stream" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">stream</strong> (options) <span class="label label-info">chainable</span> <span class="label label-warning">Node.js</span></p>
+<p>Supported only in Node.js, this method works in conjunction with the 
+<a href="#attach" class="api-type">attach</a> method to indicate that the file should be read 
+in as a readable stream during a file upload.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>options:</strong>  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="api-type" target="_blank">Object</a> <span class="label label-default">optional</span> The Readable 
+Stream options:</li>
+</ul>
+<pre><code>{ flags: &#39;r&#39;,
+  encoding: null,
+  fd: null,
+  mode: 0666,
+  autoClose: true
+}</code></pre>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="timeout" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">timeout</strong> (ms) <span class="label label-info">chainable</span></p>
+<p>This value, defined in milliseconds, is a time threshold for the transaction. 
+When this limit is reached, and the transaction has not yet completed, the 
+transaction will be aborted.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>ms:</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="api-type" target="_blank">Number</a> The threshold duration in milliseconds.</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h1 id="datatypes" style="padding:0"></h1>
+
+<h1>R Data Types</h1>
+
+<div class="well"><p>DeployR-specific encodings are used to encode R object data for use on the API.
+Encoded object data can be sent to the server as parameter values on the 
+following calls:</p>
+<ul>
+<li><a href="https://microsoft.github.io/deployr-api-docs/#r-project-workspace-push">/r/project/workspace/push</a> </li>
+<li><a href="https://microsoft.github.io/deployr-api-docs/#r-project-execute-script">/r/project/execute/script</a></li>
+<li><a href="https://microsoft.github.io/deployr-api-docs/#r-repository-script-execute">/r/repository/script/execute</a></li>
+</ul>
+<p>To pass values from JavaScript as input to an R script you use one of the defined
+factory methods in the first column:</p>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>deployr.RInput</th>
+<th>JavaScript</th>
+<th>R Object</th>
+<th>R Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.logical()</td>
+<td>Boolean</td>
+<td>primitive</td>
+<td>logical</td>
+</tr>
+<tr>
+<td>.numeric()</td>
+<td>Number</td>
+<td>primitive</td>
+<td>integer</td>
+</tr>
+<tr>
+<td>.integer()</td>
+<td>Number</td>
+<td>primative</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>.character()</td>
+<td>String</td>
+<td>primitive</td>
+<td>character</td>
+</tr>
+<tr>
+<td>.date()</td>
+<td>Date</td>
+<td>date</td>
+<td>Date</td>
+</tr>
+<tr>
+<td>.posix()</td>
+<td>Date</td>
+<td>date</td>
+<td>POSIXct</td>
+</tr>
+<tr>
+<td>.list()</td>
+<td>Array [RInput]</td>
+<td>list</td>
+<td>list</td>
+</tr>
+<tr>
+<td>.dataframe()</td>
+<td>Array [RInput]</td>
+<td>dataframe</td>
+<td>data.frame</td>
+</tr>
+<tr>
+<td>.factor()</td>
+<td>Array</td>
+<td>factor</td>
+<td>factor</td>
+</tr>
+<tr>
+<td>.ordered()</td>
+<td>Array</td>
+<td>factor</td>
+<td>ordered factor</td>
+</tr>
+<tr>
+<td>.logicalVector()</td>
+<td>Array [Boolean]</td>
+<td>primative(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.numericVector()</td>
+<td>Array [Number]</td>
+<td>primitive(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.integerVector()</td>
+<td>Array [Number]</td>
+<td>primitive(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.characterVector()</td>
+<td>Array [String]</td>
+<td>primative(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.dateVector()</td>
+<td>Array [Date]</td>
+<td>date(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.posixVector()</td>
+<td>Array [Date]</td>
+<td>date(s)</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>.numericMatrix</td>
+<td>Array [[Numeric]]</td>
+<td>primative(s)</td>
+<td>matrix</td>
+</tr>
+<tr>
+<td>.integerMatrix()</td>
+<td>Array [[Numeric]]</td>
+<td>primative(s)</td>
+<td>matrix</td>
+</tr>
+<tr>
+<td>.logicalMatrix()</td>
+<td>Array [[Boolean]]</td>
+<td>primative(s)</td>
+<td>matrix</td>
+</tr>
+<tr>
+<td>.characterMatrix()</td>
+<td>Array [[String]]</td>
+<td>primative(s)</td>
+<td>matrix</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>There are two ways to build an input to a R Script depending on need:</p>
+<ol>
+<li><p>Using <a href="#_rinput" class="api-type">deployr.RInput</a> factory.</p>
+<pre><code>var rinputs = [];
+
+rinputs.push(deployr.RInput.logical(&#39;logical_name&#39;, true));
+rinputs.push(deployr.RInput.numeric(&#39;numeric_name&#39;, 10.5));
+rinputs.push(deployr.RInput.integer(&#39;integer_name&#39;, 5));
+rinputs.push(deployr.RInput.character(&#39;character_name&#39;, &#39;Hello&#39;));
+
+// ect...
+
+deployr.io(&#39;/r/repository/script/execute&#39;)
+   .data({ filename: &#39;script.R&#39;, author: &#39;testuser&#39; })
+   .rinputs(rinputs)
+   .end();</code></pre>
+</li>
+<li><p>Inlined through the individual <a href="#request" class="api-type">DeployR</a> request
+transaction.</p>
+<pre><code>deployr.io(&#39;/r/repository/script/execute&#39;)
+  .data({ filename: &#39;script.R&#39;, author: &#39;testuser&#39; })
+  .logical(&#39;logical_name&#39;, true)
+  .numeric(&#39;numeric_name&#39;, 10.5)
+  .integer(&#39;integer_name&#39;, 5)
+  .character(&#39;character_name&#39;, &#39;Hello&#39;)
+  .end();</code></pre>
+</li>
+</ol>
+<hr>
+<h2 id="character" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">character</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R character</em> value.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="charactermatrix" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">characterMatrix</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R character matrix</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn    = deployr.RInput; // alias
+var matrix = [ [ RIn.character(&#39;cname&#39;, &#39;Hello&#39;) ] ];
+
+.characterMatrix(&#39;name&#39;, matrix)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="charactervector" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">characterVector</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R character vector</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn    = deployr.RInput; // alias
+var vector = [ RIn.character(&#39;cname&#39;, &#39;Hello&#39;) ];
+
+.characterVector(&#39;name&#39;, vector)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="dataframe" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">dataframe</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R data.frame</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn   = deployr.RInput; // alias
+var rnval = [ RInput.numeric(&#39;nname&#39;, 1.0) ];
+var df    = [ RInput.numericVector(&#39;nvname&#39;, rnvval) ];
+
+.dataframe(&#39;name&#39;, df)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="date" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">date</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R date</em> value.</p>
+<p>Example:</p>
+<pre><code>.date(&#39;name&#39;, new Date())</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" class="api-type" target="_blank">Date</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="datevector" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">dateVector</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R date vector</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn    = deployr.RInput; // alias
+var vector = [ RIn.date(&#39;dname&#39;, new Date()) ];
+
+.dateVector(&#39;name&#39;, vector)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="factor" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">factor</strong> (name, value, levels, labels) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R factor</em> value.</p>
+<p>Example:</p>
+<pre><code>var value   = [ 1, 2, 3 ];
+var levels  = [ 1, 2, 3 ];
+var labels  = [ &#39;red&#39;, &#39;blue&#39;, &#39;green&#39; ];
+
+.factor(&#39;name&#39;, value, levels, labels);</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+<li><p><strong>levels</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The value levels.</p>
+</li>
+<li><p><strong>labels</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The value labels.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="integer" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">integer</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R integer</em> value.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="api-type" target="_blank">Number</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="integermatrix" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">integerMatrix</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R integer matrix</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn    = deployr.RInput; // alias
+var matrix = [ [ RIn.integer(&#39;iname&#39;, 5) ] ];
+
+.integerMatrix(&#39;name&#39;, matrix)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="integervector" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">integerVector</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R integer vector</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn    = deployr.RInput; // alias
+var vector = [ RIn.integer(&#39;iname&#39;, 5) ];
+
+.integerVector(&#39;name&#39;, vector)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="list" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">list</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R list</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn   = deployr.RInput; // alias
+var list  = [ RInput.character(&#39;cname&#39;, &#39;Hello&#39;), RInput.numeric(&#39;iname&#39;, 1.0) ];
+
+.list(&#39;name&#39;, list)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="logical" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">logical</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R logical</em> value.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="api-type" target="_blank">Boolean</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="logicalmatrix" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">logicalMatrix</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R logical matrix</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn    = deployr.RInput; // alias
+var matrix = [ [ RIn.logical(&#39;lname&#39;, true) ] ];
+
+.logicalMatrix(&#39;name&#39;, matrix)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="logicalvector" style="padding:0"></h2>
+
+
+<p><strong style="color:#7694a7">logicalVector</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R logical vector</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn    = deployr.RInput; // alias
+var vector = [ RIn.logical(&#39;lname&#39;, true) ];
+
+.logicalVector(&#39;name&#39;, vector)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="numeric" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">numeric</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R numeric</em> value.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="api-type" target="_blank">Number</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="numericmatrix" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">numericMatrix</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R numeric matrix</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn    = deployr.RInput; // alias
+var matrix = [ [ RIn.numeric(&#39;nname&#39;, 3.14) ] ];
+
+.numericMatrix(&#39;name&#39;, matrix)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="numericvector" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">numericVector</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R numeric vector</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn    = deployr.RInput; // alias
+var vector = [ RIn.numeric(&#39;nname&#39;, 3.14) ];
+
+.numericVector(&#39;name&#39;, vector)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="ordered" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">ordered</strong> (name, value, levels, labels) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R ordered factor</em> value.</p>
+<p>Example:</p>
+<pre><code>var value   = [ 1, 2, 3 ];
+var levels  = [ 1, 2, 3 ];
+var labels  = [ &#39;red&#39;, &#39;blue&#39;, &#39;green&#39; ];
+
+.ordered(&#39;name&#39;, value, levels, labels);</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+<li><p><strong>levels</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The value levels.</p>
+</li>
+<li><p><strong>labels</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The value labels.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="posix" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">posix</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R POSIXct</em> value.</p>
+<p>Example:</p>
+<pre><code>.posix(&#39;name&#39;, new Date())</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" class="api-type" target="_blank">Date</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<h2 id="posixvector" style="padding:0"></h2>
+
+<p><strong style="color:#7694a7">posixVector</strong> (name, value) <span class="label label-info">chainable</span></p>
+<p>The DeployR-specific encoding for a <em>R POSIXct vector</em> value.</p>
+<p>Example:</p>
+<pre><code>var RIn    = deployr.RInput; // alias
+var vector = [ RIn.posix(&#39;pxname&#39;, new Date()) ];
+
+.posixVector(&#39;name&#39;, vector)</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong>name</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="api-type" target="_blank">String</a> The name of the encoded object.</p>
+</li>
+<li><p><strong>value</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="api-type" target="_blank">Array</a> The data encapsulated by the encoded object.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong> <a href="#request" class="api-type">DeployR</a></p>
+<p>The refrence to <code>this</code> request on which the method is being called.</p>
+<hr>
+<p><br><br><br></p>
+</div></div></div>
+        </div>    
+      </div>
+      <div class="push"></div>
+    </div>
+
+    <!-- Footer
+    ================================================== -->
+
+    <footer class="footer bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="row footer">
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">        
+      </div>    
+    </div>
+  </div>          
+</footer> 
+    
+    <!-- JS and analytics only. -->
+    <!-- Bootstrap core JavaScript
+================================================== -->
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/modernizr.js"></script>
+<script src="../assets/js/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- TOC
+================================================= -->
+<script>
+  // back to top
+  setTimeout(function () {
+     var $sideBar = $('.bs-sidebar');
+     if (!$sideBar) { return; }
+     $sideBar.affix({
+     offset: {
+     top: function () {
+        var offsetTop = $sideBar.offset().top
+        var sideBarMargin = parseInt($sideBar.children(0).css('margin-top'), 10)
+        var navOuterHeight = $('.bs-docs-nav').height()
+        return (this.top = offsetTop - navOuterHeight - sideBarMargin)
+      }
+      , bottom: function () {
+        return (this.bottom = $('.bs-footer').outerHeight(true))
+      }
+    }
+    })
+  }, 100)
+</script>
+
+<script>
+  $('.tab-content div').each(function( index ) {
+    if(index === 0) { $(this).addClass('active'); }
+  });
+
+  $('.code-tabs a').click(function (e) {
+  });
+
+</script>
+
+     
+  </body>
+</html>
