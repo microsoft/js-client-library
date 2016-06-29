@@ -34,10 +34,13 @@ deployr.configure( { host: config.endpoint, sticky: false });
 // the chained requests
 // ====================================================================
 
-var agent1 = deployr.io('/r/user/login')
+var agent1 = deployr.io('/r/user/login')  
   .data(credentials)
+    .error(function(err) {
+    console.log(err);
+  })
   .end(function(res) {
-  	console.log('agent1-HTTP COOKIE:: ' + res.get('httpcookie'));
+    console.log('agent1-HTTP COOKIE:: ' + agent1.getHeaders().Cookie);
   });
 
 // ====================================================================
@@ -46,23 +49,25 @@ var agent1 = deployr.io('/r/user/login')
 
 agent1.io('/r/project/create')
   .on('deployr-io:401', function(err) {
-	console.log(err);
+	  console.log(err);
   })
+  .error(function(err) { console.log(err); }) 
   .end(function(res) {
-  	console.log('agent1-HTTP COOKIE:: ' + res.get('httpcookie'));
+  	console.log('agent1-HTTP COOKIE:: ' + agent1.getHeaders().Cookie);
 	
   	// add project-id to next `agent1.io` call which is `/r/project/close`
-	return { project: res.get('project').project };
+	  return { project: res.get('project').project };
   });
 
-agent1.io('/r/project/close')  
+agent1.io('/r/project/close') 
+  .error(function(err) { console.log(err); })  
   .end(function(res) {
-  	console.log('agent1-HTTP COOKIE:: ' + res.get('httpcookie'));
+  	console.log('agent1-HTTP COOKIE:: ' + agent1.getHeaders().Cookie);
   })
 
 agent1.io('/r/user/about')  
   .end(function(res) {
-  	console.log('agent1-HTTP COOKIE:: ' + res.get('httpcookie'));
+  	console.log('agent1-HTTP COOKIE:: ' + agent1.getHeaders().Cookie);
   });  
 
 // ====================================================================
@@ -73,16 +78,17 @@ agent1.io('/r/user/about')
 // notice no `.end()` used here. Remember `.end()` sends the request to DeployR
 var agent3 = deployr.script('/testuser/root/DeployR - Hello World.R');
 
-var agent2 = deployr.script('/testuser/root/DeployR - Hello World.R')  
+var agent2 = deployr.script('/testuser/root/DeployR - Hello World.R') 
+  .error(function(err) { console.log(err); }) 
   .end(function(res) {
-  	console.log('agent2-HTTP COOKIE:: ' + res.get('httpcookie'));
+  	console.log('agent2-HTTP COOKIE:: ' + agent2.getHeaders().Cookie);
 
 
     // ====================================================================
     // should share cookies with `agent2`
     // ====================================================================
-  	agent3.share(agent2.getCookies()).end(function(ires) {
-  		console.log('agent3-HTTP COOKIE:: ' + ires.get('httpcookie'));
+  	agent3.share(agent2.getHeaders()).end(function(ires) {
+  		console.log('agent3-HTTP COOKIE:: ' + agent3.getHeaders().Cookie);
   	});
   }); 
 
@@ -91,6 +97,9 @@ var agent2 = deployr.script('/testuser/root/DeployR - Hello World.R')
 // ====================================================================
 
 agent1.script('/testuser/root/DeployR - Hello World.R')
+  .error(function(err) {
+    console.log(err);
+  })
   .end(function(res) {
-  	console.log('agent1-HTTP COOKIE:: ' + res.get('httpcookie'));
+  	console.log('agent1-HTTP COOKIE:: ' + agent1.getHeaders().Cookie);
   });

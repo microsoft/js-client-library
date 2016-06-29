@@ -1,6 +1,6 @@
 {
   "name": "deployr",
-  "version": "8.0.0",
+  "version": "8.0.5",
   "description": "Simplified JavaScript client library for making requests to DeployR.",
   "keywords": [
     "deployr",
@@ -46,7 +46,7 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/microsoft/js-client-library/issues"
   },
