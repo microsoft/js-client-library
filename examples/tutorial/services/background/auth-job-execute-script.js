@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /*
- * CCopyright (C) 2010-2016, Microsoft Corporation
+ * Copyright (C) 2010-2016, Microsoft Corporation
  *
  * This program is licensed to you under the terms of Version 2.0 of the
  * Apache License. This program is distributed WITHOUT
@@ -13,7 +13,7 @@
 
 /* ----------------------------------------------------------------------------
  * usage: $ node auth-job-execute-script.js
- * see: http://deployr.revolutionanalytics.com/documents/dev/api-doc/guide/workingjobs.html#jobsubmit
+ * see: https://microsoft.github.io/deployr-api-docs/#r-job-submit
  *
  * 1. Determine DeployR server endpoint.
  * 2. Establish an authenticated handle with the DeployR server.

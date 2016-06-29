@@ -13,7 +13,7 @@
 
 /* ----------------------------------------------------------------------------
  * usage: $ node auth-repository-management.js
- * see: http://deployr.revolutionanalytics.com/documents/dev/api-doc/guide/workingrepository.html
+ * see: https://microsoft.github.io/deployr-api-docs/#repository
  *
  * 1. Determine DeployR server endpoint.
  * 2. Establish an authenticated handle with the DeployR server.
