@@ -38,7 +38,7 @@ var globalOptions = {
   cors: false,
   logging: false,
   sticky: false,
-  cookies: null,
+  headers: null,
   host: '',
   allowSelfSignedSSLCert: false,
   maxRequests: null, // no socket pooling in http.Agent
@@ -73,6 +73,11 @@ var TOPLEVEL_ENTITIES = [
   'repository', 
   'packages' 
 ];
+
+/*
+ * Header token for CSRF.
+ */
+var X_XSRF_TOKEN = 'x-xsrf-token';
 
 /*
  * Notify global IO error events accessible by all subscribers across requests.
@@ -131,7 +136,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
      this.link       = link || {};
      this.q          = this.link.queue || new Queue();
      this.deferred   = this.link.deferred || D();
-     this.cookies    = this.link.cookies;
+     this.headers    = this.link.headers;
      this.logger     = Logger.get(api, Logger.OFF); // transaction-level logging
      this.params     = {};
      this.inputs     = []; // rinputs list 
@@ -205,43 +210,61 @@ var DeployR = Base.extend(Emitter, RInputs, {
   },  
 
   /**
-   * Shares the cookies from a differen `.io()` agent to preserve session state
-   * across `this` request and all requests chained to it.
+   * Shares the cookie and CSRF tokens from a differen `.io()` agent to preserve 
+   * session state across `this` request and all requests chained to it.   
    *
    * @method share
    * @return {DeployR} for chaining.
    * @api public   
    */  
-  share: function (cookies) {
-    if (globalOptions.sticky) {
-      if (globalOptions.cookies) {
-        this.cookies = globalOptions.cookies.slice(0); 
+  share: function (headers) {   
+
+    if (globalOptions.sticky) {       
+      if (globalOptions.headers) {
+        this.headers = globalOptions.headers;
       } else {
-        if (cookies) { 
-          this.cookies = cookies.slice(0); 
-          globalOptions.set('cookies', this.cookies);
+        if (headers) { 
+          this.headers = {
+            'Cookie': headers['set-cookie'] || headers['Cookie'],
+            'x-xsrf-token': headers[X_XSRF_TOKEN]
+          };
+          globalOptions.set('headers', this.headers);
         }
       }
     } else {
-      this.cookies = (cookies ? cookies.slice(0) : this.cookies);
+      this.headers = headers ? {
+        'Cookie': headers['set-cookie'] || headers['Cookie'],
+        'x-xsrf-token': headers[X_XSRF_TOKEN]
+      } : this.headers;
     }
 
     return this;
-  },
+  },  
 
   /**
-   * Returns the HTTP cookie previously sent by the server with Set-Cookie.
-   * This value can be passed to `.share(ruser.getCookies())` of a diffrent
+   * Returns the HTTP headers including the cookie previously sent by the server 
+   * with Set-Cookie in addition to the X-XSRF-TOKEN.
+   *
+   * This value can be passed to `.share(ruser.getHeaders())` of a diffrent
    * `.io()` agent to preserve session state across requests.
    *
-   * @method getCookies
+   * @method getHeaders
    * @return {Array} The HTTP cookie previously sent by the server with 
    * Set-Cookie.
    * @api public   
    */  
-  getCookies: function () {
-    return this.cookies;
+  getHeaders: function () {
+    return this.headers;
   }, 
+
+  /**
+   * Please use `getHeaders()`.
+   *
+   * @Deprecated 
+   */
+  getCookies: function () {
+    return this.getHeaders();
+  },      
 
   delay: function (ms) {
     // TODO: support delayed requests based on ms for now this is just a pause.
@@ -364,7 +387,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
     } 
 
     // remove any `reserved` values that could have been passed by mistake
-    var BLACKLIST = ['rinput', 'rinputs', '__cookies__'];
+    var BLACKLIST = ['rinput', 'rinputs', '__headers__'];
     BLACKLIST.forEach(function(param) { delete data[param]; });  
 
     this.params = merge(this.params, data);
@@ -447,9 +470,9 @@ var DeployR = Base.extend(Emitter, RInputs, {
       this.ioFilter = function(prevArgs) {
         var args = {}, keep;
 
-        // copy over previous arguments and filter out internal __cookies__ 
+        // copy over previous arguments and filter out internal __headers__ 
         for (var key in prevArgs) {
-           if (key !== '__cookies__') { 
+           if (key !== '__headers__') { 
               args[key] = prevArgs[key];
            }
         }
@@ -576,17 +599,36 @@ var DeployR = Base.extend(Emitter, RInputs, {
       
       this._prepRequest(responseChain, prevArgs);
 
-      Logger.info('io()', api, this.req);
+      Logger.info('io()', api, this.rexq);
       this.logger.info('io()', api, this.req);    
 
       // send next request
       this.req.end(function(res) {
-        self.share(self.cookies || res.headers['set-cookie']);         
+        //
+        // Browsers will not let you set cookies or grab headers as it handles 
+        // that for you. Here we store the `X-XSRF-TOKEN` (should it be 
+        // available) from the API response for future requests that will 
+        // `share` the same authentication HTTP session + CSRF creds.
+        //
+        if (win && !res.headers['set-cookie']) {
+          var r = (res.body && res.body.deployr ? res.body : res);  
+          if (r && r.deployr) {
+            var headers = {};
+            headers[X_XSRF_TOKEN] = r.deployr.response['X-XSRF-TOKEN'];
+            if (headers[X_XSRF_TOKEN]) {
+              self.share(headers);
+            }
+          }
+        }
 
-        // -- log cookies across requests --
-        if (self.cookies) {
-          Logger.info('cookies', api, self.cookies); 
-          self.logger.info('cookies', api, self.cookies); 
+        self.share(self.headers || res.headers);       
+
+        // -- log cookies + CSRF across requests --
+        if (self.headers) {
+          Logger.info('Cookie', api, self.headers.Cookie); 
+          self.logger.info('Cookie', api, self.headers.Cookie);
+          Logger.info(X_XSRF_TOKEN, api, self.headers[X_XSRF_TOKEN]);
+          self.logger.info(X_XSRF_TOKEN, api, self.headers[X_XSRF_TOKEN]); 
         }
 
         error = self._handleError(res);
@@ -620,8 +662,8 @@ var DeployR = Base.extend(Emitter, RInputs, {
              self.deferred.resolve(responseChain || dres);
            }          
 
-           // -- include cookies in next request in the queue --
-           args = merge(args, { __cookies__: self.cookies });          
+           // -- include headers in next request in the queue --
+           args = merge(args, { __headers__: self.headers });          
         }        
 
         q.yield(false);
@@ -646,7 +688,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
    */   
   io: function (api) {    
     return DeployR.new(api, { 
-      cookies: this.cookies, 
+      headers: this.getHeaders(),
       queue: this.q, 
       deferred: this.deferred
     });
@@ -667,7 +709,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
          opts = args.opts,
          api  = args.api,
          link = { 
-          cookies: this.cookies, 
+          headers: this.getHeaders(),
           queue: this.q, 
           deferred: this.deferred
         };  
@@ -684,53 +726,6 @@ var DeployR = Base.extend(Emitter, RInputs, {
     } else {
       return DeployR.new(api, link).data(opts);
     }    
-  },
-
-  /** 
-   * Convenience function for adding an additional repository-managed shell 
-   * script execution to the exsisting sequential request chain.
-   *
-   * This call executes repository-managed shell scripts .sh, .csh, .bash, .bat 
-   * on the DeployR server. Due to the special security concerns associated with 
-   * excuting shell scripts on the DeployR server, only shell scripts owned by 
-   * _ADMINISTRATOR_ users can be executed on this API call. Any attempt to 
-   * execute a shell script stored in the repository that is not owned by an 
-   * _ADMINISTRATOR_ user will be rejected.
-   *
-   * To execute a repository-managed shell script the caller must provide 
-   * parameter values for _author_, _directory_, _filename_. This can be
-   * achieved by providing a fully qualified shell script 
-   * `/<author>/<directory>/<filename>`, for example:
-   *
-   *  ```
-   *  .shell('/admin/external:public:admin/echo.sh', 'echo.sh args to pass.')
-   *  ```
-   *
-   * @method shell
-   * @param {String} filepath to define the fully qualified shell script for
-   * execution. 
-   * @param {String} args (optional) arguments to be passed into the shell 
-   * script on execution.
-   * @return {DeployR} for chaining.   
-   * @api public
-   */
-  shell: function(path, args) {   
-    var link = { 
-          cookies: this.cookies, 
-          queue: this.q, 
-          deferred: this.deferred
-        },
-        tokens = Lang.isString(path) ? path.split('\/') : [];
-
-    // handle both: `/author/directory/filename` & `author/directory/filename`
-    if (tokens.length > 3) { tokens = tokens.slice(1); }
-
-    return DeployR.new('/r/repository/shell/execute', link).data({
-      author: tokens[0],
-      directory: tokens[1],
-      filename: tokens[2],
-      args: args
-    });
   },
 
   /** 
@@ -753,7 +748,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
    */
   code: function(r, project) {
      var link = {
-             cookies: this.cookies,
+             headers: this.getHeaders(), 
              queue: this.q,
              deferred: this.deferred
          },
@@ -790,13 +785,13 @@ var DeployR = Base.extend(Emitter, RInputs, {
          empty    = !projects || !projects[0],
          count    = 0,
          last     = !empty ? projects.length - 1 : count,
-         cookies  = this.getCookies();           
+         headers  = this.getHeaders();         
 
     function logout(index) {
       if (index === last) {
         if (!auth) {
           DeployR.new('/r/user/logout')
-          .share(cookies)
+          .share(headers)
           .error(function() {          
             deferred.reject(false);
           })      
@@ -817,7 +812,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
       projects.forEach(function(project) {
         DeployR.new('/r/project/close')
         .data({ project: project })
-        .share(cookies)
+        .share(headers)
         .end()
         .ensure(function() {
           logout(count);
@@ -965,7 +960,7 @@ var DeployR = Base.extend(Emitter, RInputs, {
       });
     }.bind(this));    
 
-    this.share(args ? args.__cookies__ : null);
+    this.share(args ? args.__headers__ : null);
 
     // arguments returned from prev request's io().end(function() { return x; })
     if (args) { 
@@ -980,8 +975,11 @@ var DeployR = Base.extend(Emitter, RInputs, {
       this.data({ robjects: this.outputs.join() }); 
     }    
 
-    if (this.cookies) {     
-      this.cookies.forEach( function(c) { req.set('Cookie', c); });
+    if (this.headers) {
+      for (var prop in this.headers) {
+        if (!this.headers.hasOwnProperty(prop)) { continue; }
+        if (this.headers[prop]) { req.set(prop, this.headers[prop] || ''); }
+      }
     }
 
     if (this.api.upload) {    
@@ -1090,7 +1088,7 @@ module.exports = {
     for (var i in options) { globalOptions.set(i, options[i]); }
 
     // assert global cookies are empty if global `sticky` jsessionid is off
-    if (!globalOptions.sticky)  { globalOptions.set('cookies', null); }
+    if (!globalOptions.sticky)  { globalOptions.set('headers', null); }    
 
     // turn global logging on|off (off by default)
     Logger.setLevel(globalOptions.logging ? Logger.DEBUG : Logger.OFF);
@@ -1190,7 +1188,7 @@ module.exports = {
         NOOP     = null, // NOOP errors|results for [a] batch request chain
         orig     = {
           sticky: globalOptions.sticky,
-          cookies: globalOptions.cookies
+          headers: globalOptions.headers          
         };
 
     // make a copy
@@ -1270,7 +1268,7 @@ module.exports = {
     if (auth) {
       var ruser = this.auth(credentials.username, credentials.password);      
       ruser.ensure(function() { 
-        stream.share(ruser.getCookies());
+        stream.share(ruser.getHeaders());
         stream.flush(); 
       });
     }

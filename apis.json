@@ -327,11 +327,6 @@
         "format": "json"
     },
 
-    "/r/repository/shell/execute": {
-        "method": "POST",
-        "format": "json"
-    },
-
     "/r/repository/directory/archive": {
         "method": "POST",
         "format": "json"
