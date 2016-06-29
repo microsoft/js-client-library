@@ -44,9 +44,9 @@ Links
 -----
 
   * [Download](#downloading)
-  * [User Guide Documentation](http://deployr.revolutionanalytics.com/documents/dev/clientlib/)
-  * [API Documentation](http://deployr.revolutionanalytics.com/documents/dev/client-jsdoc/)
-  * [DeployR Reference Documentation](http://go.microsoft.com/fwlink/?LinkID=708554 )  
+  * [User Guide Documentation](https://microsoft.github.io/js-client-library/)
+  * [API Documentation](https://microsoft.github.io/js-client-library/api/)
+  * [DeployR Reference Documentation](https://microsoft.github.io/deployr-api-docs/)  
   * [Simple examples](#examples)
   * [Gulp, for building](#building)
   * [Tests](#tests)
@@ -59,9 +59,9 @@ There are a few diffrent ways to obtain the library depending on your
 environment and intended usage:
 
 - `$ npm install deployr` dependent on [Node.js](http://nodejs.org/download/)
-- `$ git clone https://github.com/deployr/js-client-library.git`
-- [Download Zip](https://github.com/deployr/js-client-library/archive/master.zip)
-- Download specific [release](https://github.com/deployr/js-client-library/releases)
+- `$ git clone https://github.com/microsoft/js-client-library.git`
+- [Download Zip](https://github.com/microsoft/js-client-library/archive/master.zip)
+- Download specific [release](https://github.com/microsoft/js-client-library/releases)
 
 Environments
 ============

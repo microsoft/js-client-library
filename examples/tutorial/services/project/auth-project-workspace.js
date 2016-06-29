@@ -13,7 +13,6 @@
 
 /* ----------------------------------------------------------------------------
  * usage: $ node auth-project-workspace.js
- * see: http://deployr.revolutionanalytics.com/documents/dev/api-doc/guide/workingprojects.html#projectworkspace
  *
  * 1. Determine DeployR server endpoint.
  * 2. Establish an authenticated handle with the DeployR server.

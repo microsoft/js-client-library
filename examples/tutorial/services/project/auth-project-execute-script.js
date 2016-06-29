@@ -13,7 +13,7 @@
 
 /* ----------------------------------------------------------------------------
  * usage: $ node auth-project-execute-script.js
- * see: http://deployr.revolutionanalytics.com/documents/dev/api-doc/guide/workingprojects.html#projectexecutescript
+ * see: https://microsoft.github.io/deployr-api-docs/#r-project-execute-script
  *
  * 1. Determine DeployR server endpoint.
  * 2. Establish an authenticated handle with the DeployR server.

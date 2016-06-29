@@ -13,7 +13,7 @@
 
 /* ----------------------------------------------------------------------------
  * usage: $ node auth-project-pool-create.js
- * see: http://deployr.revolutionanalytics.com/documents/dev/api-doc/guide/workingprojects.html#projectpool
+ * see: https://microsoft.github.io/deployr-api-docs/#r-project-pool
  *
  * 1. Determine DeployR server endpoint.
  * 2. Establish an authenticated handle with the DeployR server.
