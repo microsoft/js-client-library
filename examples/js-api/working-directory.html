@@ -65,7 +65,6 @@
         //    - `/r/user/logout` 
         //
         ruser.io('/r/repository/file/upload')
-            .share(ruser.getHeaders())
             .data({ filename: 'data.csv' })
             .attach(new Blob([csvdata], { type: "text/plain;charset=UTF-8" })) //HTML5
             .end() // send
