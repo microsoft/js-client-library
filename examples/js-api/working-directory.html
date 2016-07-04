@@ -86,6 +86,7 @@
             })
             .io('/r/project/directory/load')
             .data({ filename: 'data.csv', author: config.credentials.username })
+            .end() // send
             .ensure(function() {
                 // 
                 // Clean up your projects and logout.
