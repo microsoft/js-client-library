@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Example working directory file loading</title>
+    <script src="../deployr.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Example - Loads a file from the repository into the working directory for the specified project.</h1>  
+    <ol>
+      <li>Populate <strong>/examples/config.json</strong> with the proper values before running.</li>
+      <li>Open the browser's debug window to view print logs for this example.</li>
+      <li>View annotated source.</li>
+    </ol>  
+    <script>
+    function run(config) {
+
+    	//
+    	// Example inline CSV data to upload.
+    	//
+        var csvdata = 'State, PctSAT, VerbalSAT, MathSAT, AveSAT' +
+            'Alabama, 8, 491, 538, 1029' +
+            'Alaska, 47, 445, 489, 934';
+
+        //
+        // 1. Configure your DeployR server endpoint http://dhost:port
+        // 2. Set CORS, not necessary if on same domain
+        // 2. Configure a global error handler to catch all errors (helpful)
+        // 3. Authenticate into DeployR, saving user into `ruser` for later
+        //
+        var ruser = deployr.configure({
+                host: config.endpoint,
+                cors: true,
+                events: {
+                    //
+                    // Setup a global error handler
+                    //
+                    error: function(api, err) {
+                        console.log(api);
+                        console.log(err);
+                    }
+                }
+            })
+            .auth(config.credentials.username, config.credentials.password);
+
+
+        //
+        // Using the authenticated `ruser`:
+        //
+        // 1. Upload a CSV file named `data.csv` file to the repository
+        //    - `/r/repository/file/upload'`
+        //
+        // 2. Create a project (e.g. rsession)
+        //    - `/r/project/create`
+        //
+        // 3. Load CSV file from trepository into the working directory
+        //    - `/r/project/directory/load'`
+        //
+        // 4. Close project/rsession and logout
+        //    - `/r/project/close`
+        //    - `/r/user/logout` 
+        //
+        ruser.io('/r/repository/file/upload')
+            .share(ruser.getHeaders())
+            .data({ filename: 'data.csv' })
+            .attach(new Blob([csvdata], { type: "text/plain;charset=UTF-8" })) //HTML5
+            .end() // send
+            .io('/r/project/create')
+            .end(function(res) {
+                project = res.get('project').project;
+
+                //
+                // @NOTE:
+                //
+                // Any object literal returned from `.end() gets added to
+                // the next `.io()` call as a parameter. This can be helpful in 
+                // some cases. Otherwise you can save it to a variable here in 
+                // this closure. Here we pass the `project` identifier to the 
+                // next call
+                //
+
+                return { project: project };
+            })
+            .io('/r/project/directory/load')
+            .data({ filename: 'data.csv', author: config.credentials.username })
+            .ensure(function() {
+                // 
+                // Clean up your projects and logout.
+                // 
+                // @NOTE:
+                //
+                // This is a helper and is equivalen to:
+                // 1. `/r/project/close`
+                // 2. `/r/user/logout`
+                //
+                ruser.release(project);
+            });
+    }
+
+    // -- load configuration and run example --
+    $.getJSON('/config.json').done(function(config) { run(config); });
+    </script>
+</body>
+
+</html>
